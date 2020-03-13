@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="./../css/login_style.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="flex-container">
+        <div class="container-form">
+            <form action="./../php/login/autentica_login.php" method="POST">
+                    <div class="painel_logo">
+                        <div class="logo"></div>
+                    </div>
+                    <label class="login_label">Login</label>
+                    <label>Email: </label><input type="text" name="email">
+                    <label>Senha:</label><input type="password" name="password">
+                <input type="submit" value="Logar">
+                <a href="./esqueceu_senha.html" class="esqueceu-sua-senha">Esqueceu sua senha?</a>
+                <a href="./../php/cadastro_aluno_independente.php" class="criar-conta">Criar conta</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+No phpmyadmin cria um banco com o seguinte nome 'curso_palavra' e importa o arquivo que está nesse diretório

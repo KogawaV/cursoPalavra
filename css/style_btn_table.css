@@ -1,0 +1,11 @@
+.botao-excluir{
+    background-color: #8C0303;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.botao-excluir > a{
+    text-decoration: none;
+    font-size: 15px;
+    color: #ffffff;
+}

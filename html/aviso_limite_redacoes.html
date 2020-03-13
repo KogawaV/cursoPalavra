@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Limite de redações atingido</title>
+    <style type="text/css">
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        html, body{
+            font-family: Arial;
+        }
+
+        div.painel{
+            background-color: transparent;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div.painel > h2{
+            margin: 30px;
+        }
+
+        div.painel > button{
+            padding: 10px;
+            width: 300px;
+            background-color: #379c69;
+            border: none;
+            border-radius: 3px;
+            transition-duration: 0.4s;
+        }
+
+        div.painel > button > a{
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        div.painel > button:hover{
+            opacity: 0.9;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="painel">
+        <h2>Você já enviou o número máximo de redações permitida.</h2>
+        <button><a href="./../php/area_interna/oldRed.php">Ir Para Minhas Redações</a></button>
+    </div>
+</body>
+</html>

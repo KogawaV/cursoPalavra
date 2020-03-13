@@ -1,0 +1,419 @@
+/*
+    logo palette
+    green #379c69
+    blue #003399
+
+    sidenav gray 2b2d42
+    red desq d80032
+    red desh hover ef233c
+
+    sidenav blue 3f51b5
+*/
+
+* {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    transition: .25s;
+}
+
+body {
+    /* display: flex; */
+    color: #242424;
+    /* flex-direction: column; */
+    
+    background-color: #ececec;
+}
+
+.pointer:hover {
+    cursor: pointer;
+}
+
+.red {
+    background-color: #d80032;
+}
+
+.red:hover {
+    background-color: #ef233c;
+}
+
+
+.df, .center {
+    display: flex;
+}
+
+.jcc, .center {
+    justify-content: center;
+}
+
+.aic, .center {
+    align-items: center;
+}
+
+.sidenav {
+	height: 100%;
+	width: 240px;
+    background-color: #E1289B;
+    background-image: linear-gradient(#E1289B, #41B4F5);
+	top: 0;
+	left: 0;
+    position: fixed;
+    color: #ececec;
+}
+
+.sidenavLogo {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.sidenavLogo img {
+    height: 110px;
+}
+
+.sidenavUser {
+    font-weight: bold;
+}
+
+.sidenav i {
+    width: 26px;
+    font-size: 18px;
+    text-align: center;
+    margin-right: 15px;
+}
+
+.sidenav a {
+	text-decoration: none;
+	display: block;
+	padding: 14px;
+	font-weight: 600;
+    transition: .15s ease all;
+    color: #ececec!important;
+    font-size: 14px;
+}
+
+.aLogo {
+    padding: 0px!important;
+}
+
+.active, .sidenav a:hover {
+    background-image: linear-gradient(to right, #41B4F5, #E1289B);
+}
+
+.aLogo:hover {
+    background-color: transparent!important;
+}
+
+.shortcut {
+    align-self: flex-end;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    height: 10%;
+	width: 240px;
+	background-color: #3f51b5;
+	bottom: 0;
+	left: 0;
+    position: fixed;
+    color: #ececec!important;
+    padding-bottom: 14px;
+}
+
+.iShortcut {
+    color: #ececec!important;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    border-radius: 100px;
+    background-color: #8F69D6; /* 79d668 */
+}
+
+.iShortcut:hover {
+    background-color: #a57af5;
+}
+
+.bigger {
+    width: 55px;
+    height: 55px;
+}
+
+.shortcut a {
+    text-decoration: none;
+}
+
+div.content {
+    margin-left: 240px;
+}
+
+.header {
+	color: #242424;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 8px 14px 8px 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-weight: 600;
+    background-color: white;
+}
+
+.title {
+    width: 100%;
+}
+
+.widgets {
+	padding: 0px 15px 0px 15px;
+	color: #242424;
+}
+
+.profile {
+	border-radius: 50px;
+	height: 35px;
+    width: 35px;
+    background-color: #3f51b5;
+    color: #ececec;
+    font-size: 18px;
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	padding: 0px 15px 0px 15px;
+	border-right: 1px solid #ececec;
+}
+
+.username {
+	padding: 8px 0px 8px 8px;
+}
+
+.cardWrapper {
+    margin: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.cardTop {
+    background-image: linear-gradient(to right, #41B4F5, #E1289B);
+    color: #ececec;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.card {
+    background-color: white;
+    padding: 10px;
+}
+
+.input, .ddl, select {
+    padding: 5px;
+    font-size: 14px;
+    width: 100%;
+}
+
+input[type=radio] {
+    margin-right: 3px;
+}
+
+.btn, .fileLabel {
+    width: 200px;
+    border-radius: 3px;
+    border: none;
+    padding: 8px;
+    background-color: #3f51b5;
+    color: #ececec;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #5168e6;
+}
+
+.btn:disabled {
+    background-color: #b6b6b6;
+    cursor: default;
+}
+
+.rdoLabel {
+    padding-right: 10px;
+}
+
+.labelWrapper {
+    float: left;
+    width: 30%;
+}
+
+.fieldWrapper {
+    float: left;
+    width: 70%; 
+}
+
+.formRow {
+    padding: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.formRow:after {
+    display: table;
+    clear: both;
+}
+
+.itemWrapper, .corrWrapper {
+    width: 280px;
+    min-height: 228px;
+    margin: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    border-radius: 3px;
+    overflow: hidden;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.itemType {
+    background-color: #8F69D6;
+    padding: 5px 10px;
+    color: #ececec;
+    font-weight: 600;
+    text-align: center;
+}
+
+.itemProp {
+    padding: 5px 10px;
+}
+
+.label-card:before {
+    color: #8F69D6;
+    font-weight: 600;
+}
+
+.label-card {
+    padding: 5px 10px;
+    color: #8F69D6;
+    font-weight: 600;
+}
+
+.btnWrapper {
+    padding: 5px 10px;
+}
+
+.itemBtn {
+    margin-top: 10px;
+    width: 30px;
+}
+
+.itemBtn i {
+    margin-right: 8px;
+}
+
+.btnRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dwnRed {
+    background-color: #3f51b5;
+    width: 49%;
+}
+
+.dnwCorr {
+    background-color: #8F69D6;
+    width: 49%;
+}
+
+.dnwCorr:hover + .dwnCorr:not(:disabled) {
+    background-color: #a57af5;
+}
+
+.cnvCorr {
+    background-color: #379c69;
+    width: 100%;
+}
+
+.cnvCorr:hover + .dnwCorr:not(:disabled) {
+    background-color: #48c586;
+}
+
+.corrName {
+    background-color: #095256;
+    padding: 5px 10px;
+    color: #ececec;
+    font-weight: 600;
+}
+
+.corrRed, .corrDesc {
+    padding: 5px 10px;
+}
+
+.corrDesc:before {
+    content: 'Sobre mim: ';
+    color: #095256;
+    font-weight: 600;
+    display: block;
+}
+
+.corrRed:before {
+    content: 'Redação Corrigida: ';
+    color: #095256;
+    font-weight: 600;
+}
+
+.corrAval:before {
+    content: 'Avalie a correção: ';
+    color: #095256;
+    font-weight: 600;
+}
+
+.fa-star {
+    color: yellow;
+    font-size: 18px;
+    width: 14px;
+}
+
+.corrBtn {
+    background-color: #095256;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.corrBtn:hover /*+ .corrBtn:not(:disabled)*/ {
+    background-color: #0c686d!important;
+}
+
+.editProfile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.editProfile a{
+    color: #808080;
+}
+
+.btn-enviar-redacao{
+    cursor: pointer;
+    border: 1px solid #3f51b5;
+    font-size: 15px;
+    border-radius: 3px;
+    padding: 5px;
+    color: #ffffff;
+    background-color: #3f51b5;
+    margin: 0px 10px;
+}
+
+.btn-enviar-redacao:hover{
+    background-color: #ffffff;
+    border: 1px solid #3f51b5;
+    color: #3f51b5;
+}
+
+.btn-red-corretor{
+    background-color: #3f51b5;
+    width: 100%;
+}
+
+
