@@ -2,7 +2,7 @@
 
 include './../connection.php';
 
-$notificationCode = $_POST["notificationCode"];
+$notificationCode = preg_replace('/[^[:alnum:]-]/','',$_POST["notificationCode"]);
 
 $data['token'] = '0CE1D9CF08844ED487955888F10D56F7';
 $data['email'] = 'k219594@dac.unicamp.br';
