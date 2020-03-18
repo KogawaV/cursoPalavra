@@ -38,17 +38,17 @@
                         $limite_redacao = $row_texto_tipo_plano['limite_redacao_por_aluno'];
                     }   
                     //inserir aluno na base de dados
-                    $sql_insert_aluno = "INSERT INTO aluno(nome_aluno, email_aluno, cpf_aluno, senha_aluno, nome_escola, id_escola, tipo_plano, limite_redacoes, acesso)VALUES('$nome_aluno', '$email_aluno', '$cpf_aluno', '$senha_aluno', 'individual', 0, $id_plano, $limite_redacao, 1)";//de acesso to setando 1(concedendo acesso ao aluno) enquanto a funcionalidade de pagamento ainda não está pronta
+                    $sql_insert_aluno = "INSERT INTO aluno(nome_aluno, email_aluno, cpf_aluno, senha_aluno, nome_escola, id_escola, acesso)VALUES('$nome_aluno', '$email_aluno', '$cpf_aluno', '$senha_aluno', 'individual', 0, 1)";//de acesso to setando 1(concedendo acesso ao aluno) enquanto a funcionalidade de pagamento ainda não está pronta
                     $sql_insert_aluno_result = mysqli_query($conn, $sql_insert_aluno);
                     if($sql_insert_aluno_result){//insert deu certo
-                        $sql_select_id = "SELECT * FROM aluno a INNER JOIN tipos_planos tp ON a.tipo_plano = tp.id_tipo_plano WHERE cpf_aluno = '$cpf_aluno'";
-                        $sql_select_id_result = mysqli_query($conn, $sql_select_id);
+                        //$sql_select_id = "SELECT * FROM aluno a INNER JOIN tipos_planos tp ON a.tipo_plano = tp.id_tipo_plano WHERE cpf_aluno = '$cpf_aluno'";
+                        //$sql_select_id_result = mysqli_query($conn, $sql_select_id);
 
-                        while($row = mysqli_fetch_array($sql_select_id_result)){
+                        /*while($row = mysqli_fetch_array($sql_select_id_result)){
                             $id_aluno = $row['id_aluno'];
-                        }
-
-                        if($id_aluno != 0){
+                        }*/
+                        header('Location: ./../php/pagseguro_slide/planos.php?cpf='.$cpf_aluno);
+                        /*if($id_aluno != 0){
                             //echo date();
                             $data_compra = "now()";
                             $sql_insert_carrinho = "INSERT INTO carrinho(identificador_compra, id_aluno, valor_venda, qtd_plano, data_compra)VALUES($id_plano, $id_aluno, $preco_plano, 1, $data_compra)";
@@ -57,12 +57,12 @@
                                 session_start();
                                 $_SESSION['id_aluno'] = $id_aluno;
                                 $_SESSION['data_compra'] = $data_compra;
-                                //header('Location: ./pagseguro/index.php');
-                                header('Location: ./../html/login.html');
+                                header('Location: ./../php/pagseguro_slide/planos.php?cpf='.$cpf_aluno);
+                                //header('Location: ./../html/login.html');
                             }else{
                                 echo 'Erro ao inserir na tabela carrinho';
                             }
-                        }
+                        }*/
                         //$id_aluno = ($sql_select_id_result['id_aluno']);
                         //echo $id_aluno;
                     }else{

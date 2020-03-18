@@ -1,3 +1,6 @@
+<?php
+include './../connection.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -22,11 +25,14 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script>
 
+            
+
             function enviaPagseguro(){
-            $.post('pagseguro.php',{idPedido: 1},function(data){
-            $('#code').val(data);
-            $('#comprar').submit();
-            })
+
+                $.post('pagseguro.php',{idPedido: document.getElementById("plano").value, cpf: document.getElementById("cpf").value},function(data){
+                $('#code').val(data);
+                $('#comprar').submit();
+                })
             }
             
         </script>
@@ -51,7 +57,7 @@
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100">
-                    <form class="cadastro100-form validate-form" id="comprar" action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="PagSeguroLightbox(this); return false;">
+                    <form class="cadastro100-form validate-form" id="comprar" action="https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html" method="post" onsubmit="PagSeguroLightbox(this); return false;">
                         <span class="cadastro100-form-title p-b-34">
                             PLANOS
                         </span>
@@ -197,24 +203,64 @@
                                     </tr>
                                     <tr>
                                         <td style="border: 0px solid black;background-color: white;"></td>
-                                        <td><button onclick="enviaPagseguro()">Comprar</button></td>
-                                        <td><a href="../Login_v17/cadastro.php?plano=2">Continuar</a></td>
-                                        <td><a href="../Login_v17/cadastro.php?plano=3">Continuar</a></td>
-                                        <td><a href="../Login_v17/cadastro.php?plano=4">Continuar</a></td>
-                                        <td><a href="../Login_v17/cadastro.php?plano=5">Continuar</a></td>
-                                        <td><a href="../Login_v17/cadastro.php?plano=6">Continuar</a></td>
-                                        <td><a href="../Login_v17/cadastro.php?plano=7">Continuar</a></td>
+                                        <td><button id="plano1">Comprar</button></td>
+                                        <td><button id="plano7">Comprar</button></td>
+                                        <td><button id="plano2">Comprar</button></td>
+                                        <td><button id="plano3">Comprar</button></td>
+                                        <td><button id="plano4">Comprar</button></td>
+                                        <td><button id="plano5">Comprar</button></td>
+                                        <td><button id="plano6">Comprar</button></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div> 
                         <input type="hidden" name="code" id="code" value="2" />  
+                        <input type="hidden" name="plano" id="plano" value=""/>
+                        <input type="hidden" name="cpf" id="cpf" value="<?php echo $_GET["cpf"]?>"/>   
+
                     </form>
                 
-                    <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
-                    
+                    <script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+                
                 </div>
             </div>
         </div>      
     </body>
 </html>
+<script>
+    document.getElementById("plano1").addEventListener("click",()=>{
+        document.getElementById("plano").value="1";
+        console.log(document.getElementById("plano").value);
+        enviaPagseguro();
+    })
+    document.getElementById("plano2").addEventListener("click",()=>{
+        document.getElementById("plano").value="2";
+        console.log(document.getElementById("plano").value);
+        enviaPagseguro();
+    })
+    document.getElementById("plano3").addEventListener("click",()=>{
+        document.getElementById("plano").value="3";
+        console.log(document.getElementById("plano").value);
+        enviaPagseguro();
+    })
+    document.getElementById("plano4").addEventListener("click",()=>{
+        document.getElementById("plano").value="4";
+        console.log(document.getElementById("plano").value);
+        enviaPagseguro();
+    })
+    document.getElementById("plano5").addEventListener("click",()=>{
+        document.getElementById("plano").value="5";
+        console.log(document.getElementById("plano").value);
+        enviaPagseguro();
+    })
+    document.getElementById("plano6").addEventListener("click",()=>{
+        document.getElementById("plano").value="6";
+        console.log(document.getElementById("plano").value);
+        enviaPagseguro();
+    })
+    document.getElementById("plano7").addEventListener("click",()=>{
+        document.getElementById("plano").value="7";
+        console.log(document.getElementById("plano").value);
+        enviaPagseguro();
+    })
+</script>
