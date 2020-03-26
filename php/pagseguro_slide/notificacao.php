@@ -4,8 +4,8 @@ include './../connection.php';
 
 $notificationCode = preg_replace('/[^[:alnum:]-]/','',$_POST["notificationCode"]);
 
-$data['token'] = '0CE1D9CF08844ED487955888F10D56F7';
-$data['email'] = 'k219594@dac.unicamp.br';
+$data['token'] = 'DACE7F9605CF413B83DB02551FA03843';
+$data['email'] = 'walterdallaprofissional@gmail.com';
 
 $data = http_build_query($data);
 
@@ -25,7 +25,9 @@ $reference = $xml->reference;
 $status = $xml->status;
 $id_aluno;
 
-
+if($status == 3){
+    $status = 1;
+}
 
 if($reference && $status){
 
@@ -37,6 +39,7 @@ if($reference && $status){
     }
 
     $sql_update_acesso = "UPDATE aluno SET acesso = $status WHERE id_aluno = $id_aluno";
+    $sql_update_acesso = mysqli_query($conn, $sql_update_acesso);
 
 }
 

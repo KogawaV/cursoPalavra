@@ -11,9 +11,9 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);*/
 
 
 //TESTE LOCAL
-$servername = "localhost";
+$servername = "localhost:3307";
 $username = "root";
-$password = "";
+$password = "1234";
 $dbname = "curso_palavra";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);

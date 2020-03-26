@@ -216,7 +216,7 @@ include './../connection.php';
                         </div> 
                         <input type="hidden" name="code" id="code" value="2" />  
                         <input type="hidden" name="plano" id="plano" value=""/>
-                        <input type="hidden" name="cpf" id="cpf" value="<?php echo $_GET["cpf"]?>"/>   
+                        <input type="hidden" name="cpf" id="cpf" value="330.672.988-45"/>   
 
                     </form>
                 
