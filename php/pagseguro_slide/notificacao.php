@@ -4,8 +4,8 @@ include './../connection.php';
 
 $notificationCode = preg_replace('/[^[:alnum:]-]/','',$_POST["notificationCode"]);
 
-$data['token'] = 'DACE7F9605CF413B83DB02551FA03843';
-$data['email'] = 'walterdallaprofissional@gmail.com';
+$data['token'] = '';
+$data['email'] = '';
 
 $data = http_build_query($data);
 
