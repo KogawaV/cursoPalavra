@@ -154,12 +154,13 @@
 
         $array_comentarios = $array_json->{'comentarios'};
         $array_trechos = $array_json->{'trechos'};
+        $array_cores = $array_json->{'cores'};
         //variaveis de verificação
         $inserir;
 
 
         for($i = 0; $i < count($array_comentarios); $i++){
-            $sql_insert_notas = "INSERT INTO correcao_fuvest(id_aluno_redacao, id_redacao, criterio_a, criterio_b, criterio_c, nota_final, trecho_selecionado, comentario)VALUES($id_aluno, $id_redacao, $n1, $n2, $n3, $nota_total, '$array_trechos[$i]', '$array_comentarios[$i]')";
+            $sql_insert_notas = "INSERT INTO correcao_fuvest(id_aluno_redacao, id_redacao, criterio_a, criterio_b, criterio_c, nota_final, trecho_selecionado, comentario, cor_comentario)VALUES($id_aluno, $id_redacao, $n1, $n2, $n3, $nota_total, '$array_trechos[$i]', '$array_comentarios[$i]', '$array_cores[$i]')";
             $sql_insert_notas_result = mysqli_query($conn, $sql_insert_notas);
             if($sql_insert_notas_result){
                 $inserir = true;

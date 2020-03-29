@@ -98,17 +98,6 @@
             </div>
             <div class="cardWrapper">
                 <div class="cardTop">
-                    Que página é essa?
-                </div>
-                <div class="card">
-                    <span>Aqui você pode gerenciar todos os alunos cadastrados na plataforma.
-                        <br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet volutpat consequat mauris nunc congue nisi vitae suscipit tellus. Ut faucibus pulvinar elementum integer enim neque volutpat.
-                    </span>
-                </div>
-            </div>
-            <div class="cardWrapper">
-                <div class="cardTop">
                     Cadastro de corretores
                 </div>
                 <div class="card">

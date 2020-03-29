@@ -25,10 +25,10 @@
                         </a> 
                     </div>
                 </div>
-                <a href="./index_corretor.php" class="active">
+                <!-- <a href="./index_corretor.php" class="active">
                     <i class="fas fa-home iSidenav"></i>
                     <span class="sidenavTxt">Home</span>
-                </a>
+                </a> -->
                 <a href="./area_redacoes.php" class="">
                     <i class="fas fa-user iSidenav"></i>
                     <span class="sidenavTxt">Área Redações</span>

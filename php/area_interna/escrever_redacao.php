@@ -19,7 +19,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv=”Content-Type” content=”text/html; charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Escreva A Sua Redação</title>
@@ -287,7 +287,7 @@
                 <div class="logo-<?php echo strtolower($modelo_redacao); ?>"></div>
             </div>
             <form action="./validar_redacao_escrita.php?tema_redacao=<?php echo $tema_redacao;?>&modelo_redacao=<?php echo $modelo_redacao; ?>&tipo_redacao=<?php echo $tipo_redacao; ?>" method="POST">
-                <p><?php echo utf8_encode($tema_redacao); ?></p>
+                <p><?php echo $tema_redacao; ?></p>
                 <textarea name="texto_redacao" id="id_texto_redacao" maxlength="2900"></textarea>
                 <input type="submit" value="Enviar Redação">
             </form>

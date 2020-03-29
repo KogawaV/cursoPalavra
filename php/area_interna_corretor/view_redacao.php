@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./../../js/jquery.highlight-within-textarea.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
 
-    <link href="./../../js/jquery.highlight-within-textarea.css" rel="stylesheet" type="text/css">
 
     <title>Document</title>
 </head>
@@ -476,8 +475,7 @@
                     echo '
                     <div class="painel-redacao">
                         <div class="redacao">
-                            <textarea id="textArea" class="container-redacao" cols="90" rows="50" style="resize: none; text-align: justify; border: none;"disabled>'.$texto_redacao.'</textarea>
-                            <!-- <button id="btn-teste">Teste</button> -->
+                            <div id="redacao" class="container-redacao" style="padding: 10px; text-align: justify; word-spacing: 5px; line-height: 25px;">'.nl2br($texto_redacao).'</div>
                         </div>
                         
                         <div class="navegacao">
@@ -487,15 +485,24 @@
                                         <input type="radio" name="rb_btn" id="rb_comentarios" class="rd_tab" checked>
                                         <label for="rb_comentarios" class="tab_label" id="lbl-comentario">Comentários</label>
                                         <div class="tab-content">
-                                            <div id="msg" style="display:none;"></div>
-                                            <button id="btn-adicionar-comentario" class="btn-adicionar-comentario">Adicionar Comentário</button>
-                                            <button id="btn-finalizar-correcao" class="btn-finalizar-correcao">Finalizar Correção</button>
 
+
+                                        <button id="btn-verde" class="btn btn-verde"><i class="fas fa-marker"></i></button>
+                                        <button id="btn-vermelho" class="btn btn-vermelho"><i class="fas fa-marker"></i></button>
+                                        <div id="cor-selecionada"></div>
+
+                                        <div class="card-comentarios" id="painelComentarios">
                                             <div class="card-comentario" id="card-comentario">
-                                                <label id="lbl-comentario-number"></label>
-                                                <textarea id="comentario-corretor" name="comentario_corretor" style="resize: none"></textarea>
-                                                <button id="btn-comentar">Comentar</button>
+                                                <textarea name="comentario_corretor"></textarea>
+                                                <div>
+                                                    <button class="btnComentar">Comentar</button>
+                                                    <button class="btnExcluirComentario" style="display: none;">Excluir</button>
+                                                    <span id="msgStatus" style="color: #F2A205;">Clique em "Comentar" para salvar está observação.</span>
+                                                </div>
                                             </div>
+                                        </div>
+
+
 
                                         </div>
                                     </li>
@@ -584,97 +591,101 @@
                                 </ul>
                             </nav>
                         </div>
-                    </div>';
+                    </div>
+                    <button id="btnFinalizar" style="width: 50%; margin: 10px; padding: 10px;">Finalizar Correção</button>';
                 }else if(strtolower($modelo_redacao) == 'fuvest'){
                     echo '
-                    <div class="painel-redacao">
-                        <div class="redacao">
-                            <!-- <textarea id="textArea" class="container-redacao" cols="90" rows="50" style="resize: none; text-align: justify; border: none;"disabled>'.$texto_redacao.'</textarea>-->
-                            <div contenteditable="true" id="textArea" class="container-redacao">'.$texto_redacao.'</div>
-                            <!-- <button id="btn-teste">Teste</button> -->
+                        <div class="painel-redacao">
+                            <div class="redacao">
+                                <div id="redacao" class="container-redacao" style="padding: 10px; text-align: justify; word-spacing: 5px; line-height: 25px;">'.nl2br($texto_redacao).'</div>
+                            </div>
+                            
+                            <div class="navegacao">
+                                <nav class="nav_tabs">
+                                    <ul>
+                                        <li>
+                                            <input type="radio" name="rb_btn" id="rb_comentarios" class="rd_tab" checked>
+                                            <label for="rb_comentarios" class="tab_label" id="lbl-comentario">Comentários</label>
+                                            <div class="tab-content">
+                                                
+                                            <button id="btn-verde" class="btn btn-verde"><i class="fas fa-marker"></i></button>
+                                            <button id="btn-vermelho" class="btn btn-vermelho"><i class="fas fa-marker"></i></button>
+                                            <div id="cor-selecionada"></div>
+
+                                            <div class="card-comentarios" id="painelComentarios">
+                                                <div class="card-comentario" id="card-comentario">
+                                                    <textarea name="comentario_corretor"></textarea>
+                                                    <div>
+                                                        <button class="btnComentar">Comentar</button>
+                                                        <button class="btnExcluirComentario" style="display: none;">Excluir</button>
+                                                        <span id="msgStatus" style="color: #F2A205;">Clique em "Comentar" para salvar está observação.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <input type="radio" name="rb_btn" id="rb_criterios" class="rd_tab">
+                                            <label for="rb_criterios" class="tab_label" id="lbl-criterios-avaliacao">Avaliação Dos Critérios</label>
+                                            <div class="tab-content">
+                                                <div>
+                                                    <label>A. Proposta e Abordagem do Tema.</label> 
+                                                    <select name="criterio_1_fuvest" id="criterio_1_fuvest">
+                                                        <option value="">Selecione uma pontuação</option>
+                                                        <option value="0">0 ponto</option>
+                                                        <option value="1">1 ponto</option>
+                                                        <option value="2">2 pontos</option>
+                                                        <option value="3">3 pontos</option>
+                                                        <option value="4">4 pontos</option>
+                                                        <option value="5">5 pontos</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label>B. Gênero / Tipo de Texto e Coerência.</label>
+                                                    <select name="criterio_2_fuvest" id="criterio_2_fuvest">
+                                                        <option value="">Selecione uma pontuação</option>
+                                                        <option value="0">0 ponto</option>
+                                                        <option value="1">1 ponto</option>
+                                                        <option value="2">2 pontos</option>
+                                                        <option value="3">3 pontos</option>
+                                                        <option value="4">4 pontos</option>
+                                                        <option value="5">5 pontos</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label>C. Elementos Linguísticos (Modalidade e Coesão).</label>
+                                                    <select name="criterio_3_fuvest" id="criterio_3_fuvest">
+                                                        <option value="">Selecione uma pontuação</option>
+                                                        <option value="0">0 ponto</option>
+                                                        <option value="1">1 ponto</option>
+                                                        <option value="2">2 pontos</option>
+                                                        <option value="3">3 pontos</option>
+                                                        <option value="4">4 pontos</option>
+                                                        <option value="5">5 pontos</option>
+                                                    </select>
+                                                </div>
+                                                <div class="painel-nota-total">
+                                                    <p>Nota Final</p><input type="text" name="nota_total_fuvest" id="nota_total_fuvest">
+                                                </div>
+
+                                                <div class="comentario-final">
+                                                    <h2>Conclusão Geral Sobre a Redação</h2>
+                                                    <textarea name="comentario_final" class="comentario_final" id="comentario_final"></textarea>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
-                        
-                        <div class="navegacao">
-                            <nav class="nav_tabs">
-                                <ul>
-                                    <li>
-                                        <input type="radio" name="rb_btn" id="rb_comentarios" class="rd_tab" checked>
-                                        <label for="rb_comentarios" class="tab_label" id="lbl-comentario">Comentários</label>
-                                        <div class="tab-content">
-                                            <div id="msg" style="display:none;"></div>
-                                            <button id="btn-adicionar-comentario" class="btn btn-adicionar-comentario">Adicionar Comentário</button>
-                                            <button id="btn-finalizar-correcao" class="btn btn-finalizar-correcao">Finalizar Correção</button>
-                                            <button id="btn-verde" class="btn-verde"></button>
-
-                                            <div class="card-comentario" id="card-comentario">
-                                                <label id="lbl-comentario-number"></label>
-                                                <textarea id="comentario-corretor" name="comentario_corretor" style="resize: none"></textarea>
-                                                <button id="btn-comentar">Comentar</button>
-                                            </div>
-
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <input type="radio" name="rb_btn" id="rb_criterios" class="rd_tab">
-                                        <label for="rb_criterios" class="tab_label" id="lbl-criterios-avaliacao">Avaliação Dos Critérios</label>
-                                        <div class="tab-content">
-                                            <div>
-                                                <label>A. Proposta e Abordagem do Tema.</label> 
-                                                <select name="criterio_1_fuvest" id="criterio_1_fuvest">
-                                                    <option value="">Selecione uma pontuação</option>
-                                                    <option value="0">0 ponto</option>
-                                                    <option value="1">1 ponto</option>
-                                                    <option value="2">2 pontos</option>
-                                                    <option value="3">3 pontos</option>
-                                                    <option value="4">4 pontos</option>
-                                                    <option value="5">5 pontos</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label>B. Gênero / Tipo de Texto e Coerência.</label>
-                                                <select name="criterio_2_fuvest" id="criterio_2_fuvest">
-                                                    <option value="">Selecione uma pontuação</option>
-                                                    <option value="0">0 ponto</option>
-                                                    <option value="1">1 ponto</option>
-                                                    <option value="2">2 pontos</option>
-                                                    <option value="3">3 pontos</option>
-                                                    <option value="4">4 pontos</option>
-                                                    <option value="5">5 pontos</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label>C. Elementos Linguísticos (Modalidade e Coesão).</label>
-                                                <select name="criterio_3_fuvest" id="criterio_3_fuvest">
-                                                    <option value="">Selecione uma pontuação</option>
-                                                    <option value="0">0 ponto</option>
-                                                    <option value="1">1 ponto</option>
-                                                    <option value="2">2 pontos</option>
-                                                    <option value="3">3 pontos</option>
-                                                    <option value="4">4 pontos</option>
-                                                    <option value="5">5 pontos</option>
-                                                </select>
-                                            </div>
-                                            <div class="painel-nota-total">
-                                                <p>Nota Final</p><input type="text" name="nota_total_fuvest" id="nota_total_fuvest">
-                                            </div>
-
-                                            <div class="comentario-final">
-                                                <h2>Conclusão Geral Sobre a Redação</h2>
-                                                <textarea name="comentario_final" class="comentario_final" id="comentario_final"></textarea>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>';
+                        <button id="btnFinalizar" class="btn btn-finalizar-correcao" style="width: 50%; margin: 10px; padding: 5px;">Finalizar Correção</button>';
                 }else if(strtolower($modelo_redacao) == 'unicamp'){
                     echo '
                     <div class="painel-redacao">
                         <div class="redacao">
-                            <textarea id="textArea" class="container-redacao" cols="90" rows="50" style="resize: none; text-align: justify; border: none;"disabled>'.$texto_redacao.'</textarea>
-                            <!-- <button id="btn-teste">Teste</button> -->
+                            <div id="redacao" class="container-redacao" style="padding: 10px; text-align: justify; word-spacing: 5px; line-height: 25px;">'.nl2br($texto_redacao).'</div>
                         </div>
                         
                         <div class="navegacao">
@@ -684,14 +695,19 @@
                                         <input type="radio" name="rb_btn" id="rb_comentarios" class="rd_tab" checked>
                                         <label for="rb_comentarios" class="tab_label" id="lbl-comentario">Comentários</label>
                                         <div class="tab-content">
-                                            <div id="msg" style="display:none;"></div>
-                                            <button id="btn-adicionar-comentario">Adicionar Comentário</button>
-                                            <button id="btn-finalizar-correcao">Finalizar Correção</button>
+                                            <button id="btn-verde" class="btn btn-verde"><i class="fas fa-marker"></i></button>
+                                            <button id="btn-vermelho" class="btn btn-vermelho"><i class="fas fa-marker"></i></button>
+                                            <div id="cor-selecionada"></div>
 
-                                            <div class="card-comentario" id="card-comentario">
-                                                <label id="lbl-comentario-number"></label>
-                                                <textarea id="comentario-corretor" name="comentario_corretor" style="resize: none"></textarea>
-                                                <button id="btn-comentar">Comentar</button>
+                                            <div class="card-comentarios" id="painelComentarios">
+                                                <div class="card-comentario" id="card-comentario">
+                                                    <textarea name="comentario_corretor"></textarea>
+                                                    <div>
+                                                        <button class="btnComentar">Comentar</button>
+                                                        <button class="btnExcluirComentario" style="display: none;">Excluir</button>
+                                                        <span id="msgStatus" style="color: #F2A205;">Clique em "Comentar" para salvar está observação.</span>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -755,13 +771,13 @@
                                 </ul>
                             </nav>
                         </div>
-                    </div>';
+                    </div>
+                    <button id="btnFinalizar" style="width: 200px; margin: 10px; padding: 10px; border-radius: 3px; border: none; background-color: #41B4F5; color: #ffffff; font-weight: bold;">Finalizar Correção</button>';
                 }else if(strtolower($modelo_redacao) == 'vunesp'){
                     echo '
                     <div class="painel-redacao">
                         <div class="redacao">
-                            <textarea id="textArea" class="container-redacao" cols="90" rows="50" style="resize: none; text-align: justify; border: none;"disabled>'.$texto_redacao.'</textarea>
-                            <!-- <button id="btn-teste">Teste</button> -->
+                            <div id="redacao" class="container-redacao" style="padding: 10px; text-align: justify; word-spacing: 5px; line-height: 25px;">'.nl2br($texto_redacao).'</div>
                         </div>
                         
                         <div class="navegacao">
@@ -771,16 +787,20 @@
                                         <input type="radio" name="rb_btn" id="rb_comentarios" class="rd_tab" checked>
                                         <label for="rb_comentarios" class="tab_label" id="lbl-comentario">Comentários</label>
                                         <div class="tab-content">
-                                            <div id="msg" style="display:none;"></div>
-                                            <button id="btn-adicionar-comentario">Adicionar Comentário</button>
-                                            <button id="btn-finalizar-correcao">Finalizar Correção</button>
+                                            <button id="btn-verde" class="btn btn-verde"><i class="fas fa-marker"></i></button>
+                                            <button id="btn-vermelho" class="btn btn-vermelho"><i class="fas fa-marker"></i></button>
+                                            <div id="cor-selecionada"></div>
 
-                                            <div class="card-comentario" id="card-comentario">
-                                                <label id="lbl-comentario-number"></label>
-                                                <textarea id="comentario-corretor" name="comentario_corretor" style="resize: none"></textarea>
-                                                <button id="btn-comentar">Comentar</button>
+                                            <div class="card-comentarios" id="painelComentarios">
+                                                <div class="card-comentario" id="card-comentario">
+                                                    <textarea name="comentario_corretor"></textarea>
+                                                    <div>
+                                                        <button class="btnComentar">Comentar</button>
+                                                        <button class="btnExcluirComentario" style="display: none;">Excluir</button>
+                                                        <span id="msgStatus" style="color: #F2A205;">Clique em "Comentar" para salvar está observação.</span>
+                                                    </div>
+                                                </div>
                                             </div>
-
                                         </div>
                                     </li>
 
@@ -836,7 +856,8 @@
                                 </ul>
                             </nav>
                         </div>
-                    </div>';
+                    </div>
+                    <button id="btnFinalizar" class="btn btn-finalizar-correcao" style="width: 50%; margin: 10px; padding: 5px;">Finalizar Correção</button>';
                 }
             }
         }else{
@@ -932,85 +953,173 @@
     });
 </script>
 
-
-
-<!-- NOVO SCRIPT PARA SELEÇÃO DO TRECHO DA REDAÇÃO SELECIONADO -->
 <script type="text/javascript">
-    var selectedText;
-    var msg = document.getElementById('msg');
-    var lbl_comentario_number = document.getElementById('lbl-comentario-number');
-    var texto_redacao = document.getElementById('textArea');
+    var arrayTrechos = [];
+    var arrayComentario = [];
+    var arrayCorTrechos = [];
+    var corSelecionada = document.getElementById('cor-selecionada').style.display = "none";
+    var cor = "";
+    var qtd = 0;
+    var verificacao = false;
+    var novoCardComentario;
     var card_comentario = document.getElementById('card-comentario');
-    var comentario_corretor = document.getElementById('comentario-corretor');
-    card_comentario.style.display = "none";//sumindo o card de comentário
+    card_comentario.style.display = "none";
 
-    var redacao_alterada;
-    var redacao_alterada_final;
+    document.getElementById('btn-verde').addEventListener("click", ()=>{
+        var userSelection = window.getSelection();
 
-    //botões
-    var btn_adicionar_comentario = document.getElementById('btn-adicionar-comentario');
-    var btn_comentar = document.getElementById('btn-comentar');
-    var btn_finalizar_correcao = document.getElementById('btn-finalizar-correcao');
+        if(userSelection.toString() != ''){
+            document.getElementById('btn-vermelho').disabled = true;
+            document.getElementById('btn-verde').disabled = true;
 
-    //array dos trechos selecionados
-    var trechos = [];
-    var comentarios = [];
-    btn_adicionar_comentario.addEventListener('click', ()=>{
-        if(texto_redacao.selectionStart != undefined){
-            var posicao_inicial = texto_redacao.selectionStart;
-            var posicao_final = texto_redacao.selectionEnd;
-            selectedText = texto_redacao.value.substring(posicao_inicial, posicao_final);
-            trechos.push(" ("+(comentarios.length+1)+") "+selectedText);
+            document.getElementById('btn-verde').style.backgroundColor = "green";
+            document.getElementById('btn-verde').children[0].style.color = "white";
 
-            //var replace = texto_redacao.value.replace(selectedText, " ("+(trechos.length)+") " + selectedText.fontcolor("white"));
-            texto_redacao.value = replace; 
+            document.getElementById('btn-vermelho').style.backgroundColor = "white";
+            document.getElementById('btn-vermelho').children[0].style.color = "red";
+            //console.log(corSelecionada.innerHTML);
+            cor = "green-mark";
 
-            redacao_alterada = replace;
-
-            if(selectedText == ''){
-                alert('Nenhum trecho da redação foi selecionado.');
-            }else {
-                $('.container-redacao').highlightWithinTextarea({
-                    highlight: trechos
-                });
-
-                const novoCardComentario = card_comentario.cloneNode(true);
-                card_comentario.parentNode.insertBefore(novoCardComentario, null);
-                document.getElementById('comentario-corretor').value = '';
-                card_comentario.style.display = "flex";
-                btn_adicionar_comentario.style.display = "none";
-                lbl_comentario_number.innerHTML = "Comentário Nº " + (comentarios.length+1);
+            arrayTrechos.push(userSelection.toString());
+            for(var i = 0; i < userSelection.rangeCount; i++) {
+                highlightRange(userSelection.getRangeAt(i), cor);
             }
+
+            qtd++;
+            novoCardComentario = card_comentario.cloneNode(true);
+            novoCardComentario.id = "CardComentario_trecho_"+(qtd);
+            novoCardComentario.children[0].id = "textoComentarioCorretor"+(qtd);
+            novoCardComentario.children[1].children[0].id = "btnComentar"+(qtd);
+            novoCardComentario.children[1].children[2].id = "msgStatus"+(qtd);
+            novoCardComentario.children[1].children[1].id = "btnExcluirComentario"+qtd;
+
+            novoCardComentario.style.border = "2px solid #4E7329";
+
+            document.getElementById('painelComentarios').parentNode.insertBefore(novoCardComentario, null);
+            novoCardComentario.style.display = "flex";
+            novoCardComentario.children[0].focus();
+
+            getComentario(qtd);
         }else{
-            console.log('Nenhum texto selecionado.');
-            alert('Nenhum texto selecionado.');
+            alert('Nenhum trecho selecionado.');
         }
     });
 
-    btn_comentar.addEventListener('click', ()=>{
-        if(comentario_corretor.value != ''){
-            comentarios.push(comentario_corretor.value);
-            btn_adicionar_comentario.style.display = "block";
-            btn_adicionar_comentario.style.display = "block";
+    document.getElementById('btn-vermelho').addEventListener("click", ()=>{
+        var userSelection = window.getSelection();
+        //console.log(userSelection.toString());
+
+        if(userSelection.toString() != ''){
+            document.getElementById('btn-vermelho').disabled = true;
+            document.getElementById('btn-verde').disabled = true;
+
+            corSelecionada.innerHTML = "VERMELHO selecionado!! Grife um trecho do texto.";
+            document.getElementById('btn-vermelho').style.backgroundColor = "red";
+            document.getElementById('btn-vermelho').children[0].style.color = "white";
+
+            document.getElementById('btn-verde').style.backgroundColor = "white";
+            document.getElementById('btn-verde').children[0].style.color = "green";
+            //console.log(corSelecionada.innerHTML);
+            cor = "red-mark";
+
+            //chamando a função para grifar o texto
+            arrayTrechos.push(userSelection.toString());
+            for(var i = 0; i < userSelection.rangeCount; i++) {
+                highlightRange(userSelection.getRangeAt(i), cor);
+            }
+
+            qtd++;
+            novoCardComentario = card_comentario.cloneNode(true);
+            novoCardComentario.id = "CardComentario_trecho_"+(qtd);
+            novoCardComentario.children[0].id = "textoComentarioCorretor"+(qtd);
+            novoCardComentario.children[1].children[0].id = "btnComentar"+(qtd);
+            novoCardComentario.children[1].children[2].id = "msgStatus"+(qtd);
+            novoCardComentario.children[1].children[1].id = "btnExcluirComentario"+qtd;
+
+            novoCardComentario.style.border = "2px solid #7F1912";
+
+            document.getElementById('painelComentarios').parentNode.insertBefore(novoCardComentario, null);
+            novoCardComentario.style.display = "flex";
+            novoCardComentario.children[0].focus();
+
+            getComentario(qtd);
+
         }else{
-            console.log('Campo de comentário está vazio.');
-            alert('Nenhum comentário a ser enviado.');
+            alert('Nenhum trecho selecionado.');
         }
+
+
     });
+ 
+    function highlightRange(range, color) {
+        var newNode = document.createElement("span");
+        var corSelecionada = "";
 
-    var obj_json;
-    var json;
+        //console.log(color);
 
-    btn_finalizar_correcao.addEventListener('click', () => {
-            if(comentario_corretor.value != '' || comentario_corretor != null){
-                var string_obj_jason = JSON.stringify(comentarios);
-                var string_obj_jason_trechos = JSON.stringify(trechos);
+        if(color == 'green-mark'){
+            corSelecionada = 'green';
+        }else if(color == 'red-mark'){
+            corSelecionada = 'red';
+        }
+        arrayCorTrechos.push(corSelecionada);
+        //console.log(cor)
+        newNode.setAttribute(
+            "class",
+            color
+        );
+        newNode.setAttribute(
+            "id",
+            "trecho_"+arrayTrechos.length
+        );
+        newNode.setAttribute(
+            "onmouseover",
+            "onMouseOverTrecho(this)"
+        );
+        newNode.setAttribute(
+        "onmouseout",
+        "onMouseOutTrechos(this)"
+        );
+        range.surroundContents(newNode);
+    }
+
+    function onMouseOverTrecho(x){
+        var trechoSelecionado = document.getElementById(x.id);
+        if(trechoSelecionado.className == 'green-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#4E7329";
+
+        }else if(trechoSelecionado.className == 'red-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#FF6055";
+        }
+    }
+
+    function onMouseOutTrechos(x){
+        var trechoSelecionado = document.getElementById(x.id);
+        if(trechoSelecionado.className == 'green-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#ffffff";
+            cardComentario.style.border = "2px solid #4E7329";
+
+        }else if(trechoSelecionado.className == 'red-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#ffffff";
+            cardComentario.style.border = "2px solid #7F1912";
+        }
+    }
+
+
+    document.getElementById('btnFinalizar').addEventListener("click", ()=>{
+        if(arrayComentario.lenght == arrayTrechos.lenght){
+                var string_obj_jason = JSON.stringify(arrayComentario);
+                var string_obj_jason_trechos = JSON.stringify(arrayTrechos);
                 var comentario_final = document.getElementById('comentario_final').value;
                 var id_corretor = document.getElementById('id_corretor').value;
 
-                redacao_alterada_final = redacao_alterada;
+                var redacaoAlterada = document.getElementById('redacao').innerHTML;
+                console.log(redacaoAlterada);
 
-                //alert(redacao_alterada_final);
                 id_aluno = document.getElementById('id_aluno').value;
 
                 if(modelo_redacao.value == 'Enem'){
@@ -1021,16 +1130,7 @@
                     var n5 = document.getElementById('criterio_5_enem').value;
                     var nota_total = document.getElementById('nota_total_enem').value;
 
-
-                    //verificar oque tem e oq nao tem:
-                    /*
-                        1 - notas: tenho (variáveis separadas)
-                        2 - comentários: tenho (array)
-                        3 - trechos: tenho (array)
-                        4 - redação alterada: tenho (variavel separada)
-                    */
-
-                    obj_jason = {"n1": n1, "n2": n2, "n3": n3, "n4": n4, "n5": n5, "nota_total": nota_total, "comentarios": comentarios, "trechos": trechos, "redacao_alterada": redacao_alterada_final, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final, "id_corretor": id_corretor};
+                    obj_jason = {"n1": n1, "n2": n2, "n3": n3, "n4": n4, "n5": n5, "nota_total": nota_total, "comentarios": arrayComentario, "trechos": arrayTrechos, "redacao_alterada": redacaoAlterada, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final, "id_corretor": id_corretor, "cores": arrayCorTrechos};
                     json = JSON.stringify(obj_jason);
 
                     $.ajax({
@@ -1047,8 +1147,10 @@
                     var n3 = document.getElementById('criterio_3_fuvest').value;
                     var nota_total = document.getElementById('nota_total_fuvest').value;
 
-                    obj_jason = {"n1": n1, "n2": n2, "n3": n3, "nota_total": nota_total, "comentarios": comentarios, "trechos": trechos, "redacao_alterada": redacao_alterada_final, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final, "id_corretor": id_corretor};
+                    obj_jason = {"n1": n1, "n2": n2, "n3": n3, "nota_total": nota_total, "comentarios": arrayComentario, "trechos": arrayTrechos, "redacao_alterada": redacaoAlterada, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final, "id_corretor": id_corretor, "cores": arrayCorTrechos};
                     json = JSON.stringify(obj_jason);
+
+                    //console.log(json);
 
                     $.ajax({
                         type: 'POST',
@@ -1058,6 +1160,7 @@
                             window.location.href="./minhas_correcoes.php";
                         }
                     });
+
                 }else if(modelo_redacao.value == 'Unicamp'){
                     var n1 = document.getElementById('criterio_1_unicamp').value;
                     var n2 = document.getElementById('criterio_2_unicamp').value;
@@ -1065,7 +1168,7 @@
                     var n4 = document.getElementById('criterio_4_unicamp').value;
                     var nota_total = document.getElementById('nota_total_unicamp').value;
 
-                    obj_jason = {"n1": n1, "n2": n2, "n3": n3,"n4": n4, "nota_total": nota_total, "comentarios": comentarios, "trechos": trechos, "redacao_alterada": redacao_alterada_final, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final, "id_corretor": id_corretor};
+                    obj_jason = {"n1": n1, "n2": n2, "n3": n3,"n4": n4, "nota_total": nota_total, "comentarios": arrayComentario, "trechos": arrayTrechos, "redacao_alterada": redacaoAlterada, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final, "id_corretor": id_corretor, "cores": arrayCorTrechos};
                     json = JSON.stringify(obj_jason);
 
                     $.ajax({
@@ -1082,7 +1185,7 @@
                     var n3 = document.getElementById('criterio_3_vunesp').value;
                     var nota_total = document.getElementById('nota_total_vunesp').value;
 
-                    obj_jason = {"n1": n1, "n2": n2, "n3": n3, "nota_total": nota_total, "comentarios": comentarios, "trechos": trechos, "redacao_alterada": redacao_alterada_final, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final,"id_corretor": id_corretor};
+                    obj_jason = {"n1": n1, "n2": n2, "n3": n3, "nota_total": nota_total, "comentarios": arrayComentario, "trechos": arrayTrechos, "redacao_alterada": redacaoAlterada, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final,"id_corretor": id_corretor, "cores": arrayCorTrechos};
                     json = JSON.stringify(obj_jason);
 
                     $.ajax({
@@ -1097,8 +1200,106 @@
             }else{
                 alert('Nenhum comentário a ser enviado');
             }
-        });
+    });
+
+
+    function getComentario(idComentario){
+        var btnComentario = document.getElementById('btnComentar'+idComentario);
+        var btnExcluirComentario = document.getElementById('btnExcluirComentario'+idComentario);
+        var trechoSelecionadoHTML = document.getElementById('trecho_'+idComentario);
+        //console.log(btnExcluirComentario);
+
+        btnComentario.addEventListener("click", ()=>{
+                if(idComentario == 1){
+                    console.log('card'+idComentario)
+                    var textoComentarioCorretor = document.getElementById('textoComentarioCorretor'+idComentario).value;
+                    if(textoComentarioCorretor != ''){
+                        arrayComentario.push(textoComentarioCorretor);
+                        document.getElementById('msgStatus'+qtd).innerHTML = "<span style='color: green'>Observação salva com Sucesso.</span>";
+                        btnComentario.style.display = "none";
+
+                        document.getElementById('btn-vermelho').disabled = false;
+                        document.getElementById('btn-verde').disabled = false;
+                        btnExcluirComentario.style.display = "block";
+
+                        //function do botão de excluir
+                        btnExcluirComentario.addEventListener("click", ()=>{
+                            console.log('Trecho a ser excluido: '+ arrayTrechos[idComentario - 1] +'\n')
+                            console.log('Comentario a ser excluido: '+ arrayComentario[idComentario - 1] +'\n')
+                            console.log('HTML do trecho a ser excluido: ' + trechoSelecionadoHTML)
+                            console.log('Classe do elemento HTML: ' + trechoSelecionadoHTML.className)
+                            arrayTrechos[idComentario - 1] = 'undefined'
+                            if(trechoSelecionadoHTML.className == 'green-mark'){
+                                trechoSelecionadoHTML.classList.remove('green-mark')
+                                document.getElementById('CardComentario_trecho_'+idComentario).style.display = "none"
+                            }else if(trechoSelecionadoHTML.className == 'red-mark'){
+                                trechoSelecionadoHTML.className.classList.remove('red-mark')
+                                document.getElementById('CardComentario_trecho_'+idComentario).style.display = "none"
+                            }
+
+                            /*for(var i = 0; i < arrayTrechos.length; i++){
+                                console.log(arrayTrechos[i] + "\n")
+                            }
+
+                            for(var i = 0; i < arrayComentario.length; i++){
+                                console.log(arrayComentario[i] + "\n")
+                            }*/
+                        });
+                    }else{
+                        document.getElementById('msgStatus'+qtd).innerHTML = "<span style='color: red'>Nada foi digitado</span>";
+                    }
+                    console.log(arrayComentario);
+                    console.log(novoCardComentario.children[1].children[1])
+                }else{
+                    console.log('card'+idComentario)
+                    var textoComentarioCorretor = document.getElementById('textoComentarioCorretor'+idComentario).value;
+                    var textoComentarioCorretorAnterior = document.getElementById('textoComentarioCorretor'+(idComentario - 1)).value;
+                    if(textoComentarioCorretorAnterior != ''){
+                        if(textoComentarioCorretor != ''){
+                            arrayComentario.push(textoComentarioCorretor);
+                            document.getElementById('msgStatus'+qtd).innerHTML = "<span style='color: green'>Observação salva com Sucesso.</span>";
+                            btnComentario.style.display = "none";
+
+                            document.getElementById('btn-vermelho').disabled = false;
+                            document.getElementById('btn-verde').disabled = false;
+                            btnExcluirComentario.style.display = "block";
+
+                            //function do botão de excluir
+                            btnExcluirComentario.addEventListener("click", ()=>{                                
+                                console.log('Trecho a ser excluido: '+ arrayTrechos[idComentario - 1] +'\n')
+                                console.log('Comentario a ser excluido: '+ arrayComentario[idComentario - 1] +'\n')
+                                console.log('HTML do trecho a ser excluido: ' + trechoSelecionadoHTML)
+                                console.log('Classe do elemento HTML: ' + trechoSelecionadoHTML.className)
+                                arrayTrechos[idComentario - 1] = 'undefined'
+                                if(trechoSelecionadoHTML.className == 'green-mark'){
+                                    trechoSelecionadoHTML.classList.remove('green-mark')
+                                    document.getElementById('CardComentario_trecho_'+idComentario).style.display = "none"
+                                }else if(trechoSelecionadoHTML.className == 'red-mark'){
+                                    trechoSelecionadoHTML.classList.remove('red-mark')
+                                    document.getElementById('CardComentario_trecho_'+idComentario).style.display = "none"
+                                }
+                                /*for(var i = 0; i < arrayTrechos.length; i++){
+                                    console.log(arrayTrechos[i] + "\n")
+                                }
+
+                                for(var i = 0; i < arrayComentario.length; i++){
+                                    console.log(arrayComentario[i] + "\n")
+                                }*/
+                            });
+                        }else{
+                            document.getElementById('msgStatus'+qtd).innerHTML = "<span style='color: red'>Nada foi digitado</span>";
+                        }
+                        console.log(arrayComentario);
+                        console.log(novoCardComentario.children[1].children[1])
+                    }else{
+                        alert('Você ainda não comentou o trecho anterior.');
+                    }
+                }
+            });
+        }
+
 </script>
+
 
 <style> 
     *{
@@ -1107,31 +1308,38 @@
         font-family: Arial;
     }
 
+    div.painel-redacao-super{
+        display: flex;
+        flex-direction: column;
+    }
+
+    div.navegacao-super{
+        display: flex;
+        flex: 50%;
+        flex-direction: column;
+    }
+
     .painel-redacao{
         display: flex;
         flex-direction: row;
+        padding:  10px;
     }
 
     div.navegacao{
         flex: 40%;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
 
     div.redacao{
         flex: 60%;
     }
 
-    textarea{
-        font-size: 16px;
-        background-color: #ffffff;
-        color: #000000;
-    }
-
     .nav_tabs{
 		width: 600px;
 		height: 400px;
-		background-color: transparent;
+		background-color: white;
         position: relative;
 	}
 
@@ -1204,36 +1412,10 @@
         margin: 10px 0px;
     }
 
-    .card-comentario{
-        display: flex;
-        flex-direction: column;
-        margin: 10px 0px;
-    }
-
-    .card-comentario > textarea{
-        width: 80%;
-        min-height: 100px;
-
-        background-color: #ffffff;
-        color: black;
-    }
-
-    .card-comentario > button{
-        width: 100px;
-        margin: 10px 0px;
-
-        padding: 10px;
-        border-radius:3px;
-        border: 1px solid #212121;
-    }
-
     nav ul li label{
         font-weight: bold;
     }
 
-    div.card-comentario > label{
-        margin: 10px 0px;
-    }
 
     mark{
         background-color: #F29F05;
@@ -1267,10 +1449,6 @@
         opacity: 0.9;
     }
 
-    div.card-comentario textarea{
-        outline: none;
-        padding: 10px;
-    }
 
     .btn{
         border-radius: 5px;
@@ -1280,12 +1458,11 @@
         border: none;
     }
 
-    .btn-adicionar-comentario{
-        background-color: #E1289B;
-    }
 
     .btn-finalizar-correcao{
         background-color: #41B4F5;
+        padding: 10px;
+        width: 50%;
     }
 
     ::selection{
@@ -1293,15 +1470,151 @@
         background-color: yellow;   
     }
 
-    .btn-verde{
+
+
+    .green-mark{
+        background-color: green;
+        color: #ffffff;
+    }
+
+    .red-mark{
+        background-color: red;
+        color: #ffffff;
+    }
+
+    .btn{
+        border: none;
+        border-radius: 3px;
         width: 25px;
         height: 25px;
-        background-color: green;
+    }
+
+    .btn-verde{
+        border: 2px solid green;
+        background-color: #ffffff;
+        outline: none;
+    }
+
+    .btn-verde i{
+        color: green;
+    }
+
+    .btn-vermelho{  
+        border: 2px solid red;
+        background-color: #ffffff;
+        outline: none;
+    }
+
+    .btn-vermelho i{
+        color: red;
+    }
+
+    textarea{
+        outline: none;
+        resize: none;
+    }
+
+    span{
+        cursor:pointer;
+    }
+
+    div.container{
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    div.container div.redacao{
+        flex: 50%;
+    }
+
+    div.container div.correcao{
+        flex: 50%;
+    }
+
+    div.container div.correcao div.card-comentarios{
+        margin: 10px;
+    }  
+
+    div.container-alert div.alert{
+        font-weight: bold;
+        width: 30%;
+    }
+
+    div.card-comentarios{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    div.card-comentario{
+        border-radius: 5px;
+        padding: 5px;
+
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: 20px;
+    }
+
+    div.card-comentario div{
+        display: flex;
+        flex-direction: row;
+    }
+
+    div.card-comentario div span{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #f1f1f1;
+        background-color: #f1f1f1;
+        padding: 2px;
+        border-radius: 3px;
+    }
+
+    div.card-comentario textarea{
+        border-radius: 3px;
+        min-height: 50px;
+        resize: none;
+        outline: none;
+        padding: 10px;
+    }
+
+    div.card-comentario div{
+        margin: 5px 0px;
+    }
+
+    div.card-comentario div button{
+        border-radius: 3px;
+        padding: 5px;
+        margin: 0px 5px;
+        outline: none;
+        border: none;
+        color: #ffffff;
+        font-weight: bold;
+        transition-duration: 0.4s;
+    }
+
+    button.btnComentar{
+        background-color: #E1289B;
+    }
+
+    div.card-comentario div button:hover{
+        opacity: 0.9;
+        cursor: pointer;
+    }
+
+    div.msg_status{
+        width: 200px;
+        height: 30px;
+    }
+
+    button.btnExcluirComentario{
+        background-color: #7F0100;
     }
 </style>
 
 <script type="text/javascript">
-    document.getElementById('btn-verde').addEventListener("click", ()=>{
-        console.log('botão verde foi clicado.');
-    });
+
 </script>

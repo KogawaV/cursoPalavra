@@ -178,6 +178,7 @@
 
         $array_entrada = array("'");
         $array_saida = array("");
+        $comentario_final;
         //echo $caminho_redacao;
         //echo $id_redacao;
         //echo $universidade;
@@ -744,6 +745,7 @@
                     //echo 'Dados de correção selecionados com sucesso';
                     while($row_texto_redacao = mysqli_fetch_array($sql_select_texto_redacao_result)){
                         $texto_redacao =str_replace($array_entrada, $array_saida, $row_texto_redacao['redacao_alterada']);
+                        $comentario_final = $row_texto_redacao['comentario_final'];
 
                         echo '
                         <div class="painel">
@@ -754,7 +756,7 @@
                                     <p>'.$row_texto_redacao['tema_redacao'].'</p>
                                 </div>
                                 
-                                <textarea class="textArea" name="redacao_alterada" id="redacao_alterada" cols="90" rows="40" style="resize: none; background-color: white; color: black; border: none;" disabled>'.$texto_redacao.'</textarea>
+                                <div class="redacao" id="redacao">'.nl2br($texto_redacao).'</div>
                             </div>';
                     }
 
@@ -881,17 +883,16 @@
                                 $texto_criterio_5 = 'Elabora muito bem proposta de intervenção, detalhada, relacionada ao tema e articulada à discussão desenvolvida no texto.';
                             }
 
-                            
-                            //colocando tuddo isso numa div bonitinha
-                            echo '
+                            if($trechos_selecionados != 'undefined'){
+                                echo '
                                 <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                                    <div class="card-comentario" id="painel-comentario">
+                                    <div class="card-comentario" id="CardComentario_trecho_'.$row.'" style="border: 2px solid '.$row_enem['cor_comentario'].'">
                                         <label>Trecho comentado</label>
-                                        <div id="trecho_redacao">'.$trechos_selecionados.'</div>
-                                        <label>Comentário ('.$row.')</label>
-                                            <textarea name="texto_comentario" id="texto_comentario" disabled>'.$comentarios_trechos_selecionados.'</textarea>
-                                    </div>
-                            ';
+                                        <div id="trecho_redacao" style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$trechos_selecionados.'</div>
+                                        <label>Comentário</label>
+                                            <textarea name="texto_comentario" id="texto_comentario" disabled style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$comentarios_trechos_selecionados.'</textarea>
+                                    </div>';   
+                            }
                         }
                         echo "</div></li>";
                         //var_dump($array_trechos);
@@ -937,6 +938,12 @@
                                 <p>'.$texto_criterio_5.'</p>
                                 <p>Nota: '.$criterio_5.'</p>
                             </div>
+                            <div class="box-comentario-final">
+                                <h2 style="margin: 10px;">Comentário geral sobre a sua correção</h2>
+                                <div style="width: 100%; min-height: 100px; border: 1px solid #f1f1f1; margin: 10px; padding: 10px;" class="campo-comentario-final">
+                                    '.nl2br($comentario_final).'
+                                </div>
+                            </div>
                             <div class="painel-btn">
                                 <button><a href="./oldRed.php">Retornar para minhas redações</a></button>
                             </div>
@@ -959,6 +966,7 @@
                     //echo 'Dados de correção selecionados com sucesso.';
                     while($row_texto_redacao = mysqli_fetch_array($sql_select_texto_redacao_result)){
                         $texto_redacao = $row_texto_redacao['redacao_alterada'];
+                        $comentario_final = $row_texto_redacao['comentario_final'];
                         
 
                         echo '
@@ -973,7 +981,7 @@
                                     <p>'.$row_texto_redacao['nome_aluno'].'</p>
                                 </div>
                                 
-                                <textarea class="textArea" name="redacao_alterada" id="redacao_alterada" cols="90" rows="40" style="resize: none; background-color: white; color: black; border: none;" disabled>'.nl2br($texto_redacao).'</textarea>                            
+                                <div class="redacao" id="redacao">'.nl2br($texto_redacao).'</div>  
                             </div>';
                     }
 
@@ -1069,16 +1077,16 @@
                         }
 
                         //colocando tuddo isso numa div bonitinha
-                        echo '
-                        <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                            <div class="card-comentario" id="painel-comentario">
-                                <label>Trecho comentado</label>
-                                <div id="trecho_redacao">'.$trechos_selecionados.'</div>
-                                <label>Comentário ('.$row.')</label>
-                                    <textarea name="texto_comentario" id="texto_comentario" disabled>'.$comentarios_trechos_selecionados.'</textarea>
-                            </div>
-                    ';
-
+                        if($trechos_selecionados != 'undefined'){
+                            echo '
+                            <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
+                                <div class="card-comentario" id="CardComentario_trecho_'.$row.'" style="border: 2px solid '.$row_unicamp['cor_comentario'].'">
+                                    <label>Trecho comentado</label>
+                                    <div id="trecho_redacao" style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$trechos_selecionados.'</div>
+                                    <label>Comentário</label>
+                                        <textarea name="texto_comentario" id="texto_comentario" disabled style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$comentarios_trechos_selecionados.'</textarea>
+                                </div>';   
+                        }
                     }
 
                     echo "</div></li>";
@@ -1116,6 +1124,12 @@
                             <p>'.$texto_criterio_4.'</p>
                             <p>Nota: '.$criterio_4.'</p>
                         </div>
+                        <div class="box-comentario-final">
+                            <h2 style="margin: 10px;">Comentário geral sobre a sua correção</h2>
+                            <div style="width: 100%; min-height: 100px; border: 1px solid #f1f1f1; margin: 10px; padding: 10px;" class="campo-comentario-final">
+                                '.nl2br($comentario_final).'
+                            </div>
+                        </div>
                         <div class="painel-btn">
                             <button><a href="./oldRed.php">Retornar para minhas redações</a></button>
                         </div>
@@ -1141,6 +1155,7 @@
                     //echo 'Dados de coreção selecionados com sucesso.';
                     while($row_texto_redacao = mysqli_fetch_array($sql_select_texto_redacao_result)){
                         $texto_redacao = $row_texto_redacao['redacao_alterada'];
+                        $comentario_final = $row_texto_redacao['comentario_final'];
 
                         echo '
                         <div class="painel">
@@ -1154,9 +1169,8 @@
                                     <p>'.$row_texto_redacao['nome_aluno'].'</p>
                                 </div>
                                 
-                                <textarea class="textArea" name="redacao_alterada" id="redacao_alterada" cols="90" rows="40" style="resize: none; background-color: white; color: black; border: none;" disabled>'.$texto_redacao.'</textarea>
-                            </div>
-                    ';
+                                <div class="redacao" id="redacao">'.nl2br($texto_redacao).'</div>
+                            </div>';
                     }
 
 
@@ -1173,6 +1187,7 @@
                     $criterio_2;
                     $criterio_3;
                     $notal_final;
+                    $i_comentario;
 
                     while($row_fuvest = mysqli_fetch_array($sql_select_correcao_fuvest_result)){
                             $comentario_redacao = nl2br($row_fuvest['comentario']);
@@ -1247,17 +1262,19 @@
                                 $texto_criterio_c = 'A escolha lexical é bem sucedida, com raros problemas de norma culta, há um bom conhecimento das regras gramaticais, porém não se tem ainda a sofisticação da sintaxe.';
                             }else if($row_fuvest['criterio_c'] == 5){
                                 $texto_criterio_c = 'Sofisticação da sintaxe e um conhecimento muito bom das regras gramaticais. Admitem-se raros deslizes na norma culta, que não prejudiquem o sentido das ideias. A escolha do vocabulário é perfeita para o que se deseja expressar.';
-                            }   
-
-                            //colocando tuddo isso numa div bonitinha
-                            echo '
-                            <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                                <div class="card-comentario" id="painel-comentario">
-                                    <label>Trecho comentado</label>
-                                    <div id="trecho_redacao">'.$trechos_selecionados.'</div>
-                                    <label>Comentário ('.$row.')</label>
-                                        <textarea name="texto_comentario" id="texto_comentario" disabled>'.$comentarios_trechos_selecionados.'</textarea>
-                                </div>';
+                            }  
+                            
+                            
+                            if($trechos_selecionados != 'undefined'){
+                                echo '
+                                <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
+                                    <div class="card-comentario" id="CardComentario_trecho_'.$row.'" style="border: 2px solid '.$row_fuvest['cor_comentario'].'">
+                                        <label>Trecho comentado</label>
+                                        <div id="trecho_redacao" style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$trechos_selecionados.'</div>
+                                        <label>Comentário</label>
+                                            <textarea name="texto_comentario" id="texto_comentario" disabled style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$comentarios_trechos_selecionados.'</textarea>
+                                    </div>';   
+                            }
                         }
 
                     echo "</div></li>";
@@ -1293,6 +1310,12 @@
                                     <p>'.$texto_criterio_c.'</p>
                                     <p>'.$criterio_3.'</p>
                                 </div>
+                                <div class="box-comentario-final">
+                                    <h2 style="margin: 10px;">Comentário geral sobre a sua correção</h2>
+                                    <div style="width: 100%; min-height: 100px; border: 1px solid #f1f1f1; margin: 10px; padding: 10px;" class="campo-comentario-final">
+                                        '.nl2br($comentario_final).'
+                                    </div>
+                                </div>
                                 <div class="painel-btn">
                                     <button><a href="./oldRed.php">Retornar para minhas redações</a></button>
                                 </div>
@@ -1301,8 +1324,7 @@
                     </div>
                     </li>
                     </ul>
-                    </nav>
-                    ';
+                    </nav>';
                 }else{
                     echo 'Falha ao selecionar os dados de correção.';
                 }
@@ -1318,6 +1340,7 @@
                     echo '<div class="box">';
                     while($row_vunesp_texto_red = mysqli_fetch_array($sql_select_texto_redacao_result)){
                         $texto_redacao = nl2br($row_vunesp_texto_red['redacao_alterada']);
+                        $comentario_final = $row_vunesp_texto_red['comentario_final'];
 
                         echo '
                         <div class="painel">
@@ -1331,7 +1354,7 @@
                                     <p>'.$row_vunesp_texto_red['nome_aluno'].'</p>
                                 </div>
                                 
-                                <textarea class="textArea" name="redacao_alterada" id="redacao_alterada" cols="90" rows="40" style="resize: none; background-color: white; color: black; border: none;" disabled>'.$texto_redacao.'</textarea>
+                                <div class="redacao" id="redacao">'.nl2br($texto_redacao).'</div>
                             </div>';
                     }
 
@@ -1413,15 +1436,16 @@
                             $texto_criterio_c = 'Sofisticação da sintaxe e dos elementos da norma culta e coesão. Admitem-se raros deslizes na norma culta e coesão, que não prejudiquem o sentido das ideias. A escolha do vocabulário é perfeita para o que se deseja expressar.  ';
                         }
 
-                        //colocando tuddo isso numa div bonitinha
-                        echo '
-                        <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                            <div class="card-comentario" id="painel-comentario">
-                                <label>Trecho comentado</label>
-                                <div id="trecho_redacao">'.$trechos_selecionados.'</div>
-                                <label>Comentário ('.$row.')</label>
-                                    <textarea name="texto_comentario" id="texto_comentario" disabled>'.$comentarios_trechos_selecionados.'</textarea>
-                            </div>';
+                        if($trechos_selecionados != 'undefined'){
+                            echo '
+                            <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
+                                <div class="card-comentario" id="CardComentario_trecho_'.$row.'" style="border: 2px solid '.$row_vunesp['cor_comentario'].'">
+                                    <label>Trecho comentado</label>
+                                    <div id="trecho_redacao" style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$trechos_selecionados.'</div>
+                                    <label>Comentário</label>
+                                        <textarea name="texto_comentario" id="texto_comentario" disabled style="border: 1px solid #f1f1f1; background-color: #f1f1f1; border-radius: 3px;">'.$comentarios_trechos_selecionados.'</textarea>
+                                </div>';   
+                        }
                     }
 
                     echo "</div></li>";
@@ -1455,6 +1479,12 @@
                                     <label>C. Expressão</label>
                                     <p>'.$texto_criterio_c.'</p>
                                     <p>Nota: '.$criterio_3.'</p>
+                                </div>
+                                <div class="box-comentario-final">
+                                    <h2 style="margin: 10px;">Comentário geral sobre a sua correção</h2>
+                                    <div style="width: 100%; min-height: 100px; border: 1px solid #f1f1f1; margin: 10px; padding: 10px;" class="campo-comentario-final">
+                                        '.nl2br($comentario_final).'
+                                    </div>
                                 </div>
                                 <div class="painel-btn">
                                     <button><a href="./oldRed.php">Retornar para minhas redações</a></button>
@@ -1666,17 +1696,50 @@
         flex-direction: column;
     }
 
+
+
+
+    .green-mark{
+        background-color: green;
+        color: #ffffff;
+    }
+
+    .red-mark{
+        background-color: red;
+        color: #ffffff;
+    }
+
+    span:hover{
+        cursor: pointer;
+    }
+
         
 </style>
 
 <script type="text/javascript">
-    var trechos = [];
-    var comentario = [];
+    function onMouseOverTrecho(x){
+        var trechoSelecionado = document.getElementById(x.id);
+        if(trechoSelecionado.className == 'green-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#4E7329";
 
-    var id_trechos = document.getElementById('id_trechos');
-    trechos = id_trechos.value.split("|");
+        }else if(trechoSelecionado.className == 'red-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#FF6055";
+        }
+    }
 
-    $('.textArea').highlightWithinTextarea({
-        highlight: trechos,
-    });
+    function onMouseOutTrechos(x){
+        var trechoSelecionado = document.getElementById(x.id);
+        if(trechoSelecionado.className == 'green-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#ffffff";
+            cardComentario.style.border = "2px solid #4E7329";
+
+        }else if(trechoSelecionado.className == 'red-mark'){
+            var cardComentario = document.getElementById('CardComentario_'+trechoSelecionado.id);
+            cardComentario.style.backgroundColor = "#ffffff";
+            cardComentario.style.border = "2px solid #7F1912";
+        }
+    }
 </script>

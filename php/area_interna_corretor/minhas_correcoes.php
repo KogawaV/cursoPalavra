@@ -93,10 +93,10 @@
                         </a> 
                     </div>
                 </div>
-                <a href="./index_corretor.php" class="">
+                <!-- <a href="./index_corretor.php" class="">
                     <i class="fas fa-home iSidenav"></i>
                     <span class="sidenavTxt">Home</span>
-                </a>
+                </a> -->
                 <a href="./area_redacoes.php" class="">
                     <i class="fas fa-user iSidenav"></i>
                     <span class="sidenavTxt">Área Redações</span>
@@ -243,7 +243,7 @@
                                                     <div class="img-warning"></div>
                                                 </div>
                                                 <div style="padding: 5px 5px;">
-                                                    <button style="display:block; width: 100%; margin: 10px 0px; padding: 8px; border-radius: 3px; border: none; background-color: #379c69;"><i></i><a href="./view_redacao.php?tema_redacao='.$row_red['tema_redacao'].'&modelo_redacao='.$row_red['universidade_redacao'].'&nome_aluno='.$row_red['nome_aluno'].'&tipo_redacao='.$row_red['tipo_redacao'].'&id_aluno='.$row_red['id_aluno_redacao'].'&id_redacao='.$row_red['id_red'].'" style="text-decoration: none; color: #ffffff; font-size: 14px; font-weight: bold;">Corrigir</a></button>
+                                                    <button style="display:block; width: 100%; margin: 10px 0px; padding: 8px; border-radius: 3px; border: none; background-color: #E1289B;"><i></i><a href="./view_redacao.php?tema_redacao='.$row_red['tema_redacao'].'&modelo_redacao='.$row_red['universidade_redacao'].'&nome_aluno='.$row_red['nome_aluno'].'&tipo_redacao='.$row_red['tipo_redacao'].'&id_aluno='.$row_red['id_aluno_redacao'].'&id_redacao='.$row_red['id_red'].'" style="text-decoration: none; color: #ffffff; font-size: 14px; font-weight: bold;">Corrigir</a></button>
                                                 </div>
                                             </div>';
                                             //echo $row_red['tipo_redacao'];

@@ -37,11 +37,20 @@
         <link rel="shortcut icon" type="image/x-icon" href="./../../images/favicon.ico">
         <style type="text/css">
             .btn-novo-tema > a{
-                    text-decoration: none;
-                    color: #ffffff;
-                    font-weight: bold;
-                    font-size: 15px;
-                }
+                text-decoration: none;
+                color: #ffffff;
+                font-weight: bold;
+                font-size: 15px;
+            }
+
+            .btn-texto-motivador{
+                background-color: #41B4F5;
+            }
+
+            .btn-escreva-redacao{
+                background-color: #E1289B;
+            }
+
 
                 .card-tema{
                     border: 1px solid #f1f1f1;
@@ -69,18 +78,18 @@
                 .painel-btn-tema{
                     padding: 10px;
                     display: flex;
-                    flex-direction: column;
+                    flex-direction: row;
                     align-items: center;
-                    justify-content: center;
+                    justify-content: space-around;
                 }
 
                 .painel-btn-tema > button{
                     border: none;
-                    background-color: #003399;
+                    /*background-color: #003399;*/
                     padding: 10px;
                     border-radius: 3px;
                     width: 100%;
-                    margin: 5px 0px;
+                    margin: 5px;
                 }
 
                 .painel-btn-tema > button > i{
@@ -203,6 +212,15 @@
                     visibility: visible;
                     opacity: 1;
                 }
+
+                div.header-tema > div.logo-obj{
+                    background-color: transparent;
+                    background-image: url('./../../png/logo_objetivo.png');
+                    background-size: 100% 100%;
+                    height: 90px;
+                    width: 120px;
+                    margin-top: 10px;
+                }
         </style>
         <title>Curso Palavra</title>
     </head>
@@ -218,7 +236,7 @@
                 </div>
                 <a href="./index.php" class="">
                     <i class="fas fa-home iSidenav"></i>
-                    <span class="sidenavTxt">Home</span>
+                    <span class="sidenavTxt">Desempenho</span>
                 </a>
                 <a href="./profile.php" class="">
                     <i class="fas fa-user iSidenav"></i>
@@ -226,32 +244,13 @@
                 </a>
                 <a href="./temas.php" class="active">
                     <i class="fas fa-user iSidenav"></i>
-                    <span class="sidenavTxt">Temas</span>
+                    <span class="sidenavTxt">Temas e Produção</span>
                 </a>
-                <!-- <a href="./novaRed.php" class="">
-                    <i class="fas fa-file-medical iSidenav"></i>
-                    <span class="sidenavTxt">Nova Redação</span>
-                </a> 
-                <a href="./envRed.php" class="">
-                    <i class="fas fa-file-upload iSidenav"></i>
-                    <span class="sidenavTxt">Enviar Redação</span>
-                </a> -->
                 <a href="./oldRed.php" class="">
                     <i class="fas fa-folder-open iSidenav"></i>
                     <span class="sidenavTxt">Redações Submetidas</span>
                 </a>
             </div>
-        <!-- <div class="shortcut">
-            <a href="#">
-                <i class="fas fa-comment-dots iSHortcut"></i>
-            </a>
-            <a href="#">
-                <i class="fas fa-plus iSHortcut bigger"></i>
-            </a>
-            <a href="#">
-                <i class="fas fa-cog iSHortcut"></i>
-            </a>
-        </div> -->
         <div class="content">
             <div class="header">
                 <div class="title">
@@ -282,19 +281,174 @@
                                 </div>
                             ';
                         }else{
+                            /*
+                                1 - enem básico
+                                2 - enem mais
+                                3 - unicamp
+                                4 - unicamp mais
+                                5 - fuvest/unesp
+                                6 - Temas Vocacionados: Medicina e áreas da saúde
+                            */
+                            $tipo_plano_aluno;
+
+                            $sql_select_tipo_plano_aluno = "SELECT * FROM aluno WHERE id_aluno = '{$_SESSION['id_aluno']}'";
+                            $sql_select_tipo_plano_aluno_result = mysqli_query($conn, $sql_select_tipo_plano_aluno);
                             echo '<div class="painel-card-tema">';
-                                while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                            if($sql_select_tipo_plano_aluno_result){
+                                while($row = mysqli_fetch_array($sql_select_tipo_plano_aluno_result)){
+                                    $tipo_plano_aluno = $row['tipo_plano'];
+                                }
+                                
+
+                                switch($tipo_plano_aluno){
+                                    case 1://enem 
+                                        while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                                            $caminho_texto_motivadores = './../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'];
+                                            echo '<input type="hidden" value='.$caminho_texto_motivadores.' id="caminho_texto_motivador">';
+
+                                            if($row_tema['modelo_tema'] == 'Enem'){
+                                                echo '
+                                                <div class="card-tema">
+                                                    <div class="header-tema"><div class="logo-enem"></div></div>
+                                                    <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
+                                                    <div class="painel-btn-tema">
+                                                        <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                        <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
+                                                    </div>
+                                                </div>
+                                            ';
+                                            }
+                                        } 
+                                        break;
+                                    
+                                    case 2://enem mais
+                                        while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                                            $caminho_texto_motivadores = './../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'];
+                                            echo '<input type="hidden" value='.$caminho_texto_motivadores.' id="caminho_texto_motivador">';
+
+                                            if($row_tema['modelo_tema'] == 'Enem'){
+                                                echo '
+                                                <div class="card-tema">
+                                                    <div class="header-tema"><div class="logo-enem"></div></div>
+                                                    <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
+                                                    <div class="painel-btn-tema">
+                                                        <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                        <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
+                                                    </div>
+                                                </div>
+                                            ';
+                                            }
+                                        } 
+                                        break;
+
+                                    case 3://unicamp
+                                        while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                                            $caminho_texto_motivadores = './../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'];
+                                            echo '<input type="hidden" value='.$caminho_texto_motivadores.' id="caminho_texto_motivador">';
+
+                                            if($row_tema['modelo_tema'] == 'Unicamp'){
+                                                echo '
+                                                <div class="card-tema">
+                                                    <div class="header-tema"><div class="logo-unicamp"></div></div>
+                                                    <div class="title-tema"><p>Tema</p>'.$row_tema['nome_tema'].'</div>
+                                                    <div class="painel-btn-tema">
+                                                        <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                        <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
+                                                    </div>
+                                                </div>
+                                            ';
+                                            }
+                                        }
+                                        break;
+
+                                    case 4://unicamp mais
+                                        while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                                            $caminho_texto_motivadores = './../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'];
+                                            echo '<input type="hidden" value='.$caminho_texto_motivadores.' id="caminho_texto_motivador">';
+
+                                            if($row_tema['modelo_tema'] == 'Unicamp'){
+                                                echo '
+                                                <div class="card-tema">
+                                                    <div class="header-tema"><div class="logo-unicamp"></div></div>
+                                                    <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
+                                                    <div class="painel-btn-tema">
+                                                        <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                        <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
+                                                    </div>
+                                                </div>
+                                            ';
+                                            }
+                                        }
+                                        break;
+
+                                    case 5://fuvest/unesp
+                                            while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                                                $caminho_texto_motivadores = './../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'];
+                                                echo '<input type="hidden" value='.$caminho_texto_motivadores.' id="caminho_texto_motivador">';
+    
+                                                if($row_tema['modelo_tema'] == 'Fuvest'){
+                                                    echo '
+                                                    <div class="card-tema">
+                                                        <div class="header-tema"><div class="logo-usp"></div></div>
+                                                        <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
+                                                        <div class="painel-btn-tema">
+                                                            <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                            <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
+                                                        </div>
+                                                    </div>';
+                                                }else if($row_tema['modelo_tema'] == 'Vunesp'){
+                                                    echo '
+                                                    <div class="card-tema">
+                                                        <div class="header-tema"><div class="logo-vunesp"></div></div>
+                                                        <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
+                                                        <div class="painel-btn-tema">
+                                                            <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                            <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
+                                                        </div>
+                                                    </div>';
+                                                }
+                                            }
+                                            break;
+
+                                    case 6://temas vocacionadas para área da medicina
+                                            echo 'Em desenvolvimento';
+                                            break;
+                                        
+                                    case 7:
+                                            while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                                                $caminho_texto_motivadores = './../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'];
+                                                echo '<input type="hidden" value='.$caminho_texto_motivadores.' id="caminho_texto_motivador">';
+    
+                                                if($row_tema['modelo_tema'] == 'Objetivo'){
+                                                    echo '
+                                                    <div class="card-tema">
+                                                        <div class="header-tema"><div class="logo-obj"></div></div>
+                                                        <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
+                                                        <div class="painel-btn-tema">
+                                                            <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                            <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
+                                                        </div>
+                                                    </div>
+                                                ';
+                                                }
+                                            }
+                                            break;
+                                }
+                                echo '</div>';
+                            }else{
+                                echo 'Falha ao selecionar tipo do aluno.';
+                            }
+                                /*while($row_tema = mysqli_fetch_array($sql_select_temas_cadastrados_result)){
+                                    
+                                    
                                     if($row_tema['modelo_tema'] == 'Fuvest'){
                                         echo '
                                         <div class="card-tema">
                                             <div class="header-tema"><div class="logo-usp"></div></div>
                                             <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>
-                                                <div class="painel-escolha-enviar-red">
-                                                    <!-- <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Envie sua redação</span><a href="./envRed.php?tipo_redacao=1"><i class="fas fa-file-upload"></i></a></button> -->
-                                                    <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
-                                                </div>
+                                                <button class="tooltip" style="background-color: #41B4F5;" id="btn_texto_motivador"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                <button style="background-color: #E1289B;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.utf8_encode($row_tema['nome_tema']).'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
                                             </div>
                                         </div>
                                     ';
@@ -304,11 +458,8 @@
                                             <div class="header-tema"><div class="logo-unicamp"></div></div>
                                             <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>
-                                                <div class="painel-escolha-enviar-red">
-                                                    <!-- <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Envie sua redação</span><a href="./envRed.php?tipo_redacao=1"><i class="fas fa-file-upload"></i></a></button> -->
-                                                    <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.$row_tema['nome_tema'].'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
-                                                </div>
+                                                <button class="tooltip" style="background-color: #41B4F5;"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                <button style="background-color: #E1289B;" class="tooltip btn-escreva-redacao"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.$row_tema['nome_tema'].'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
                                             </div>
                                         </div>
                                     ';
@@ -318,11 +469,8 @@
                                             <div class="header-tema"><div class="logo-vunesp"></div></div>
                                             <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>
-                                                <div class="painel-escolha-enviar-red">
-                                                    <!-- <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Envie sua redação</span><a href="./envRed.php?tipo_redacao=1"><i class="fas fa-file-upload"></i></a></button> -->
-                                                    <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.$row_tema['nome_tema'].'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
-                                                </div>
+                                                <button class="tooltip" style="background-color: #41B4F5;"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                <button style="background-color: #E1289B;" class="tooltip btn-escreva-redacao"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.$row_tema['nome_tema'].'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
                                             </div>
                                         </div>
                                     ';
@@ -332,17 +480,13 @@
                                             <div class="header-tema"><div class="logo-enem"></div></div>
                                             <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>
-                                                <div class="painel-escolha-enviar-red">
-                                                    <!-- <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Envie sua redação</span><a href="./envRed.php?tipo_redacao=1"><i class="fas fa-file-upload"></i></a></button> -->
-                                                    <button style="background-color: #379c69;" class="tooltip"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.$row_tema['nome_tema'].'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
-                                                </div>
+                                                <button class="tooltip" style="background-color: #41B4F5;"><span class="tooltiptext">Textos Motivadores</span><a href='.$caminho_texto_motivadores.'><i class="fas fa-eye"></i></a></button>
+                                                <button style="background-color: #E1289B;" class="tooltip btn-escreva-redacao"><span class="tooltiptext">Escreva sua redação</span><a href="./escrever_redacao.php?nome_tema='.$row_tema['nome_tema'].'&modelo_tema='.$row_tema['modelo_tema'].'&tipo_redacao=2&caminho_tema=./../area_interna_adm/cadastrar_novo_tema/'.$row_tema['caminho_arquivo_tema'].'&universidade='.$row_tema['modelo_tema'].'"><i class="fas fa-pen"></i></a></button>
                                             </div>
                                         </div>
                                     '; 
                                     }
-                                }
-                            echo '</div>';
+                                }*/
                         }
                     }else{
                         echo 'Erro ao selecionar dados da temas_redacao';
@@ -353,6 +497,16 @@
         </div>
     </body>
 </html>
+
+<script>
+    var btnTextoMotivador = document.getElementById('btn_texto_motivador');
+    btnTextoMotivador.addEventListener("click", ()=>{
+        var caminhoTextoMotivador = document.getElementById('caminho_texto_motivador').value;
+        //console.log(caminhoTextoMotivador);
+        window.location.href="./visualizarTextoMotivador.php?caminho="+caminhoTextoMotivador;
+    });
+
+</script>
 
 <!-- 
 

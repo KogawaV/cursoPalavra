@@ -161,17 +161,6 @@
             </div>
             <div class="cardWrapper">
                 <div class="cardTop">
-                    Que página é essa?
-                </div>
-                <div class="card">
-                    <span>Aqui você pode realizar o cadastro de novas escolas.
-                        <br>
-                        Algum Texto.
-                    </span>
-                </div>
-            </div>
-            <div class="cardWrapper">
-                <div class="cardTop">
                     Cadastro De Escolas
                 </div>
                 <div class="card">
@@ -192,7 +181,7 @@
                                     $sql_select_planos_result = mysqli_query($conn, $sql_select_planos);
                                     if($sql_select_planos_result){
                                         while($row_planos = mysqli_fetch_array($sql_select_planos_result)){
-                                            echo '<option value="'.$row_planos['limite_redacao_por_aluno'].'">'.$row_planos['tipo_plano'].' - '.$row_planos['limite_redacao_por_aluno'].' redações por aluno.</option>';
+                                            echo '<option value="'.$row_planos['limite_redacao_por_aluno'].'">'.$row_planos['limite_redacao_por_aluno'].' redações por aluno.</option>';
                                         }
                                     }else{
                                         echo 'Erro ao selecionar planos da base de dados.';

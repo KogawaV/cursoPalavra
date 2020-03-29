@@ -7,7 +7,7 @@
         include './../../connection.php';
     }
 ?>
-<?php header("Content-Type: text/html; charset=ISO-8859-1",true);?> 
+<?php /*header("Content-Type: text/html; charset=ISO-8859-1",true);*/?> 
 <html>
     <head>
         <meta charset="utf-8">
@@ -68,16 +68,24 @@
                 padding: 10px;
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-between;
             }
 
             .painel-btn-tema > button{
                 border: none;
-                background-color: #003399;
                 padding: 10px;
                 border-radius: 3px;
                 width: 100%;
                 transition-duration: 0.4s;
+                margin: 5px;
+            }
+
+            .painel-btn-tema button.delete-tema{
+                background-color: #7F0100;
+            }
+
+            .painel-btn-tema button.visu-tema{
+                background-color: #41B4F5;
             }
 
             div.painel-btn-tema > button:hover{
@@ -144,6 +152,15 @@
                 width: 150px;
                 margin-top: 10px;
             }
+
+            div.header-tema > div.logo-obj{
+                background-color: transparent;
+                background-image: url('./../../../png/logo_objetivo.png');
+                background-size: 100% 100%;
+                height: 90px;
+                width: 120px;
+                margin-top: 10px;
+            }
         </style>
         <title>Curso Palavra</title>
     </head>
@@ -207,18 +224,7 @@
         </div>
         <div class="cardWrapper">
             <div class="cardTop">
-                Que página é essa?
-            </div>
-            <div class="card">
-                <span>
-                    <br>
-                    Aqui você pode ver todos os temas já cadastrados na plataforma
-                </span>
-            </div>
-        </div>
-        <div class="cardWrapper">
-            <div class="cardTop">
-                Cadastro de corretores
+                Temas Cadastrados
             </div>
             <div class="card">
                 <?php
@@ -240,18 +246,21 @@
                                         echo '
                                         <div class="card-tema">
                                             <div class="header-tema"><div class="logo-usp"></div></div>
-                                            <div class="title-tema"><p>Tema</p>'.utf8_decode($row_tema['nome_tema']).'</div>
+                                            <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>                                            </div>
+                                                <button class="visu-tema"><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer"><i class="fas fa-eye"></i></a></button>     
+                                                <button class="delete-tema"><a href=./delete_tema.php?id_tema='.$row_tema['id_tema'].'><i class="fa fa-times-circle"></i></a></button>                                       
+                                            </div>
                                         </div>
                                     ';
                                     }else if($row_tema['modelo_tema'] == 'Unicamp'){
                                         echo '
                                         <div class="card-tema">
                                             <div class="header-tema"><div class="logo-unicamp"></div></div>
-                                            <div class="title-tema"><p>Tema</p>'.utf8_decode($row_tema['nome_tema']).'</div>
+                                            <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>
+                                                <button class="visu-tema"><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer"><i class="fas fa-eye"></i></a></button>
+                                                <button class="delete-tema"><a href=./delete_tema.php?id_tema='.$row_tema['id_tema'].'><i class="fa fa-times-circle"></i></a></button>
                                             </div>
                                         </div>
                                     ';
@@ -259,9 +268,10 @@
                                         echo '
                                         <div class="card-tema">
                                             <div class="header-tema"><div class="logo-vunesp"></div></div>
-                                            <div class="title-tema"><p>Tema</p>'.utf8_decode($row_tema['nome_tema']).'</div>
+                                            <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>
+                                                <button class="visu-tema"><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer"><i class="fas fa-eye"></i></a></button>
+                                                <button class="delete-tema"><a href=./delete_tema.php?id_tema='.$row_tema['id_tema'].'><i class="fa fa-times-circle"></i></a></button>
                                             </div>
                                         </div>
                                     ';
@@ -269,12 +279,22 @@
                                         echo '
                                         <div class="card-tema">
                                             <div class="header-tema"><div class="logo-enem"></div></div>
-                                            <div class="title-tema"><p>Tema</p>'.utf8_decode($row_tema['nome_tema']).'</div>
+                                            <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
                                             <div class="painel-btn-tema">
-                                                <button><i class="fas fa-eye"></i><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer">Visualizar Tema</a></button>
+                                                <button class="visu-tema"><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer"><i class="fas fa-eye"></i></a></button>
+                                                <button class="delete-tema"><a href=./delete_tema.php?id_tema='.$row_tema['id_tema'].'><i class="fa fa-times-circle"></i></a></button>
                                             </div>
-                                        </div>
-                                    '; 
+                                        </div>'; 
+                                    }else if($row_tema['modelo_tema'] == 'Objetivo'){
+                                        echo '
+                                        <div class="card-tema">
+                                            <div class="header-tema"><div class="logo-obj"></div></div>
+                                            <div class="title-tema"><p>Tema</p>'.utf8_encode($row_tema['nome_tema']).'</div>
+                                            <div class="painel-btn-tema">
+                                                <button class="visu-tema"><a href=./'.$row_tema['caminho_arquivo_tema'].' target="_blank" rel="noopener noreferrer"><i class="fas fa-eye"></i></a></button>
+                                                <button class="delete-tema"><a href=./delete_tema.php?id_tema='.$row_tema['id_tema'].'><i class="fa fa-times-circle"></i></a></button>
+                                            </div>
+                                        </div>'; 
                                     }
                                 }
                             echo '</div>';
