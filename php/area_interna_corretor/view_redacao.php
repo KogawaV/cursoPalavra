@@ -54,410 +54,7 @@
         $array_entrada = array("'");
         $array_saida = array("");
 
-        if($sql_selec_dados_redacao_result && $tipo_redacao == 1){//REDAÇÕES QUE FORAM ENVIADAS PELOS ALUNOS
-            while($row_redacao = mysqli_fetch_array($sql_selec_dados_redacao_result)){
-                $nome_aluno = $row_redacao['nome_aluno'];
-                $modelo_redacao = $row_redacao['universidade_redacao']; 
-                $tipo_redacao = $row_redacao['tipo_redacao'];
-                $tema_redacao = $row_redacao['tema_redacao'];
-                $caminho_redacao = mysqli_real_escape_string($conn, $_GET['caminho_red']);
-
-                //passando o modelo da redação para o javascript
-                echo '<input type="hidden" value='.$modelo_redacao.' id="modelo_redacao">';
-
-                if(strtolower($modelo_redacao) == 'enem'){
-                    echo '
-                    <div class="box_1">
-                    <div class="painel_redacao_1">
-                        <div class="dados_redacao_1">
-                            <div class="logo_plataforma"></div>
-                        </div>
-                        <div class="dados-alunos">
-                            <label>Tema</label>
-                            <p>'.$tema_redacao.'</p>
-                            <label>Aluno</label>
-                            <p>'.$nome_aluno.'</p>
-                        </div>
-                        <iframe src="./'.$caminho_redacao.'" width="950px" height="1200px"></iframe>
-                    </div>
-            
-                    <div class="box-painel-criterios">
-                        <div class="painel-logo-criterio">
-                            <div class="logo-plataforma"></div>
-                        </div>
-                        <div class="painel-modo-redacao">
-                            <div>
-                                <div class="logo_enem"></div>
-                                <div>
-                                    <h3>Escolha o modo de correção</h3>
-                                    <button class="btn" id="btn_vizualizar">Vizualizar</button>
-                                    <button class="btn" id="btn_comentar">Comentar</button>
-                                    <p id="lbl_modo_redacao"></p>
-                                </div>
-                            </div>
-                        </div>
-            
-                        <h2>Avaliação da redação</h2>
-                            <div class="box-criterio box-criterio-1">
-                                <label>I. Demonstrar domínio da norma culta da língua escrita.</label>
-                                <select name="criterio_1_enem" id="criterio_1_enem">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 pontos</option>
-                                    <option value="40">40 pontos</option>
-                                    <option value="80">80 pontos</option>
-                                    <option value="120">120 pontos</option>
-                                    <option value="160">160 pontos</option>
-                                    <option value="200">200 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-2">
-                                <label>II. Compreender a proposta de redação e aplicar conceitos das várias áreas do conhecimento para desenvolver o tema, dentro dos limites estruturais do texto dissertativo-argumentativo.</label>
-                                <select name="criterio_2_enem" id="criterio_2_enem">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 pontos</option>
-                                    <option value="40">40 pontos</option>
-                                    <option value="80">80 pontos</option>
-                                    <option value="120">120 pontos</option>
-                                    <option value="160">160 pontos</option>
-                                    <option value="200">200 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-3">
-                                <label>III. . Selecionar, relacionar, organizar e interpretar informações, fatos, opiniões e argumentos em defesa de um ponto de vista.</label>
-                                <select name="criterio_3_enem" id="criterio_3_enem">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 pontos</option>
-                                    <option value="40">40 pontos</option>
-                                    <option value="80">80 pontos</option>
-                                    <option value="120">120 pontos</option>
-                                    <option value="160">160 pontos</option>
-                                    <option value="200">200 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-4">
-                                <label>IV. Demonstrar conhecimento dos mecanismos linguísticos necessários para a construção da argumentação.</label>
-                                <select name="criterio_4_enem" id="criterio_4_enem">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 pontos</option>
-                                    <option value="40">40 pontos</option>
-                                    <option value="80">80 pontos</option>
-                                    <option value="120">120 pontos</option>
-                                    <option value="160">160 pontos</option>
-                                    <option value="200">200 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-5">
-                                <label>V. Elaborar proposta de intervenção para o problema abordado, demonstrando respeito aos direitos humanos.</label>
-                                <select name="criterio_5_enem" id="criterio_5_enem">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 pontos</option>
-                                    <option value="40">40 pontos</option>
-                                    <option value="80">80 pontos</option>
-                                    <option value="120">120 pontos</option>
-                                    <option value="160">160 pontos</option>
-                                    <option value="200">200 pontos</option>
-                                </select>
-                            </div>
-                            <div class="painel-nota-total">
-                                <p>Nota Final</p><input type="text" name="nota_total_enem" id="nota_total_enem">
-                            </div>
-            
-                            <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                            <div class="painel-comentario" id="painel-comentario">
-                                <label>Trecho da redação a ser comentado</label>
-                                <div id="trecho_redacao"></div>
-                                <label>Comentário</label>
-                                    <textarea name="texto_comentario" id="texto_comentario"></textarea>
-                                    <button class="btn btn-comentar" id="btn_adicionar_comentario"><a href="#">Comentar</a></button>
-                            </div>
-                            
-                            
-                            <div class="painel-btn">
-                                <button class="btn btn-comentar" id="btn_salvar_comentario"><a href="#">Salvar Comentário</a></button>
-                                <button class="btn btn-cancelar"><a href="#">Cancelar</a></button>
-                                <!-- <button id="enviar_comentarios">Enviar comentários</button> -->
-                                <button class="btn btn-finalizar-correcao" id="finalizar_correcao">Finalizar Correção</button>
-                                <!-- <div id="string_jason"></div> -->
-                            </div>
-                    </div>';
-                }else if(strtolower($modelo_redacao) == 'fuvest'){
-                    echo '
-                    <div class="box_1">
-                    <div class="painel_redacao_1">
-                        <div class="dados_redacao_1">
-                            <div class="logo_plataforma"></div>
-                        </div>
-                        <div class="dados-alunos">
-                            <label>Tema</label>
-                            <p>'.$tema_redacao.'</p>
-                            <label>Aluno</label>
-                            <p>'.$nome_aluno.'</p>
-                        </div>
-                        <iframe src="./'.$caminho_redacao.'" width="950px" height="1200px"></iframe>
-                        </div>
-            
-                    <div class="box-painel-criterios">
-                        <div class="painel-logo-criterio">
-                            <div class="logo-plataforma"></div>
-                        </div>
-                        <div class="painel-modo-redacao">
-                            <div>
-                                <div class="logo_fuvest"></div>
-                                <div>
-                                    <h3>Escolha o modo de correção</h3>
-                                    <button class="btn" id="btn_vizualizar">Vizualizar</button>
-                                    <button class="btn" id="btn_comentar">Comentar</button>
-                                    <p id="lbl_modo_redacao"></p>
-                                </div>
-                            </div>
-                        </div>
-            
-                        <h2>Avaliação da redação</h2>
-                            <div class="box-criterio box-criterio-1">
-                            <label>A. Proposta e Abordagem do Tema.</label> 
-                                <select name="criterio_1_fuvest" id="criterio_1_fuvest">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                    <option value="4">4 pontos</option>
-                                    <option value="5">5 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-2">
-                                <label>B. Gênero / Tipo de Texto e Coerência.</label>
-                                <select name="criterio_2_fuvest" id="criterio_2_fuvest">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                    <option value="4">4 pontos</option>
-                                    <option value="5">5 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-3">
-                                <label>C. Elementos Linguísticos (Modalidade e Coesão).</label>
-                                <select name="criterio_3_fuvest" id="criterio_3_fuvest">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                    <option value="4">4 pontos</option>
-                                    <option value="5">5 pontos</option>
-                                </select>
-                            </div>
-                            <div class="painel-nota-total">
-                                <p>Nota Final</p><input type="text" name="nota_total_fuvest" id="nota_total_fuvest">
-                            </div>
-            
-                            <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                            <div class="painel-comentario" id="painel-comentario">
-                                <label>Trecho da redação a ser comentado</label>
-                                <div id="trecho_redacao"></div>
-                                <label>Comentário</label>
-                                    <textarea name="texto_comentario" id="texto_comentario"></textarea>
-                                    <button class="btn btn-comentar" id="btn_adicionar_comentario"><a href="#">Comentar</a></button>
-                            </div>
-                            
-                            
-                            <div class="painel-btn">
-                                <button class="btn btn-comentar" id="btn_salvar_comentario"><a href="#">Salvar Comentário</a></button>
-                                <button class="btn btn-cancelar"><a href="#">Cancelar</a></button>
-                                <!-- <button id="enviar_comentarios">Enviar comentários</button> -->
-                                <button class="btn btn-finalizar-correcao" id="finalizar_correcao">Finalizar Correção</button>
-                                <!-- <div id="string_jason"></div> -->
-                            </div>
-                    </div>
-                    ';
-                }else if(strtolower($modelo_redacao) == 'unicamp'){
-                    echo '
-                            
-                    <div class="box_1">
-                    <div class="painel_redacao_1">
-                        <div class="dados_redacao_1">
-                            <div class="logo_plataforma"></div>
-                        </div>
-                        <div class="dados-alunos">
-                            <label>Tema</label>
-                            <p>'.$tema_redacao.'</p>
-                            <label>Aluno</label>
-                            <p>'.$nome_aluno.'</p>
-                        </div>
-                        <iframe src="./'.$caminho_redacao.'" width="950px" height="1200px"></iframe>
-                        </div>
-            
-                    <div class="box-painel-criterios">
-                        <div class="painel-logo-criterio">
-                            <div class="logo-plataforma"></div>
-                        </div>
-                        <div class="painel-modo-redacao">
-                            <div>
-                                <div class="logo_unicamp"></div>
-                                <div>
-                                    <h3>Escolha o modo de correção</h3>
-                                    <button class="btn" id="btn_vizualizar">Vizualizar</button>
-                                    <button class="btn" id="btn_comentar">Comentar</button>
-                                    <p id="lbl_modo_redacao"></p>
-                                </div>
-                            </div>
-                        </div>
-            
-                        <h2>Avaliação da redação</h2>
-                            <div class="box-criterio box-criterio-1">
-                                <label>I. Proposta Temática (PT).</label>
-                                <select name="criterio_1_unicamp" id="criterio_1_unicamp">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-2">
-                                <label>II. Gênero (G).</label>
-                                <select name="criterio_2_unicamp" id="criterio_2_unicamp">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-3" id="criterio_3_unicamp">
-                                <label>III. Leitura dos Textos da Prova (LT).</label>
-                                <select name="criterio_3_unicamp">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-4" id="criterio_4_unicamp">
-                                <label>IV. Leitura dos Textos da Prova (LT).</label>
-                                <select name="criterio_4_unicamp">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                    <option value="4">4 pontos</option>
-                                </select>
-                            </div>
-                            <div class="painel-nota-total">
-                                <p>Nota Final</p><input type="text" name="nota_total_unicamp" id="nota_total_unicamp">
-                            </div>
-            
-                            <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                            <div class="painel-comentario" id="painel-comentario">
-                                <label>Trecho da redação a ser comentado</label>
-                                <div id="trecho_redacao"></div>
-                                <label>Comentário</label>
-                                    <textarea name="texto_comentario" id="texto_comentario"></textarea>
-                                    <button class="btn btn-comentar" id="btn_adicionar_comentario"><a href="#">Comentar</a></button>
-                            </div>
-                            
-                            
-                            <div class="painel-btn">
-                                <button class="btn btn-comentar" id="btn_salvar_comentario"><a href="#">Salvar Comentário</a></button>
-                                <button class="btn btn-cancelar"><a href="#">Cancelar</a></button>
-                                <!-- <button id="enviar_comentarios">Enviar comentários</button> -->
-                                <button class="btn btn-finalizar-correcao" id="finalizar_correcao">Finalizar Correção</button>
-                                <!-- <div id="string_jason"></div> -->
-                            </div>
-                    </div>
-                    ';
-                }else if(strtolower($modelo_redacao) == 'vunesp'){
-                    echo '
-                    <div class="box_1">
-                    <div class="painel_redacao_1">
-                        <div class="dados_redacao_1">
-                            <div class="logo_plataforma"></div>
-                        </div>
-                        <div class="dados-alunos">
-                            <label>Tema</label>
-                            <p>'.$tema_redacao.'</p>
-                            <label>Aluno</label>
-                            <p>'.$nome_aluno.'</p>
-                        </div>
-                        <iframe src="./'.$caminho_redacao.'" width="950px" height="1200px"></iframe>
-                        </div>
-            
-                    <div class="box-painel-criterios">
-                        <div class="painel-logo-criterio">
-                            <div class="logo-plataforma"></div>
-                        </div>
-                        <div class="painel-modo-redacao">
-                            <div>
-                                <div class="logo_vunesp"></div>
-                                <div>
-                                    <h3>Escolha o modo de correção</h3>
-                                    <button class="btn" id="btn_vizualizar">Vizualizar</button>
-                                    <button class="btn" id="btn_comentar">Comentar</button>
-                                    <p id="lbl_modo_redacao"></p>
-                                </div>
-                            </div>
-                        </div>
-            
-                        <h2>Avaliação da redação</h2>
-                            <div class="box-criterio box-criterio-1">
-                                <label>A. Tipo de texto e abordagem do tema.</label>
-                                <select name="criterio_1_vunesp" id="criterio_1_vunesp">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                    <option value="4">4 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-2" id="criterio_2_vunesp">
-                                <label>B. Estrutura</label>
-                                <select name="criterio_2_vunesp">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                </select>
-                            </div>
-                            <div class="box-criterio box-criterio-3" id="criterio_3_vunesp">
-                                <label>C. Expressão</label>
-                                <select name="criterio_3_vunesp">
-                                    <option value="">Selecione uma pontuação</option>
-                                    <option value="0">0 ponto</option>
-                                    <option value="1">1 ponto</option>
-                                    <option value="2">2 pontos</option>
-                                    <option value="3">3 pontos</option>
-                                </select>
-                            </div>
-                            <div class="painel-nota-total">
-                                <p>Nota Final</p><input type="text" name="nota_total_vunesp" id="nota_total_vunesp">
-                            </div>
-            
-                            <!-- PAINEL ONDE OS COMETÁRIOS FICARAM ARMAZENADOS -->
-                            <div class="painel-comentario" id="painel-comentario">
-                                <label>Trecho da redação a ser comentado</label>
-                                <div id="trecho_redacao"></div>
-                                <label>Comentário</label>
-                                    <textarea name="texto_comentario" id="texto_comentario"></textarea>
-                                    <button class="btn btn-comentar" id="btn_adicionar_comentario"><a href="#">Comentar</a></button>
-                            </div>
-                            
-                            
-                            <div class="painel-btn">
-                                <button class="btn btn-comentar" id="btn_salvar_comentario"><a href="#">Salvar Comentário</a></button>
-                                <button class="btn btn-cancelar"><a href="#">Cancelar</a></button>
-                                <!-- <button id="enviar_comentarios">Enviar comentários</button> -->
-                                <button class="btn btn-finalizar-correcao" id="finalizar_correcao">Finalizar Correção</button>
-                                <!-- <div id="string_jason"></div> -->
-                            </div>
-                    </div>';
-                }
-            }
-        }else if($sql_selec_dados_redacao_escrita_result && $tipo_redacao == 2){//AQUI VEM AS REDAÇÕES QUE FORAM ESCRITAS PELOS ALUNOS
+       
             while($row_redacao_escrita = mysqli_fetch_array($sql_selec_dados_redacao_escrita_result)){
                 $nome_aluno = $row_redacao_escrita['nome_aluno'];
                 $modelo_redacao = $row_redacao_escrita['universidade_redacao']; 
@@ -858,11 +455,63 @@
                         </div>
                     </div>
                     <button id="btnFinalizar" class="btn btn-finalizar-correcao" style="width: 50%; margin: 10px; padding: 5px;">Finalizar Correção</button>';
+                }else if(strtolower($modelo_redacao) == 'objetivo'){
+                    echo '
+                    <div class="painel-redacao">
+                        <div class="redacao">
+                            <div id="redacao" class="container-redacao" style="padding: 10px; text-align: justify; word-spacing: 5px; line-height: 25px;">'.nl2br($texto_redacao).'</div>
+                        </div>
+                        
+                        <div class="navegacao">
+                            <nav class="nav_tabs">
+                                <ul>
+                                    <li>
+                                        <input type="radio" name="rb_btn" id="rb_comentarios" class="rd_tab" checked>
+                                        <label for="rb_comentarios" class="tab_label" id="lbl-comentario">Comentários</label>
+                                        <div class="tab-content">
+                                            <button id="btn-verde" class="btn btn-verde"><i class="fas fa-marker"></i></button>
+                                            <button id="btn-vermelho" class="btn btn-vermelho"><i class="fas fa-marker"></i></button>
+                                            <div id="cor-selecionada"></div>
+
+                                            <div class="card-comentarios" id="painelComentarios">
+                                                <div class="card-comentario" id="card-comentario">
+                                                    <textarea name="comentario_corretor"></textarea>
+                                                    <div>
+                                                        <button class="btnComentar">Comentar</button>
+                                                        <button class="btnExcluirComentario" style="display: none;">Excluir</button>
+                                                        <span id="msgStatus" style="color: #F2A205;">Clique em "Comentar" para salvar está observação.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <input type="radio" name="rb_btn" id="rb_criterios" class="rd_tab">
+                                        <label for="rb_criterios" class="tab_label" id="lbl-criterios-avaliacao">Avaliação Dos Critérios</label>
+                                        <div class="tab-content">
+
+                                            <button id="adicionarCriterio">Adicionar critério de avaliação</button>
+
+                                            <div id="card_criterio_avaliacao" class="card_criterio_avaliacao">
+                                                <textarea class="titulo_criterio" contenteditable="true" placeholder="Título do critério"></textarea>
+                                                <textarea class="texto_criterio" contenteditable="true" placeholder="Texto do critério"></textarea>
+                                                <textarea class="nota_criterio" contenteditable="true" placeholder="Nota do critério"></textarea>
+                                                <button class="btnSalvarCriterio">Salvar critério</button>
+                                                <button class="btnExcluirCriterio">Excluir critério</button>
+                                            </div>
+
+                                            <div id="painel_criterios_dinamicos"></div>
+                                           
+                                        </div>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <button id="btnFinalizar" class="btn btn-finalizar-correcao" style="width: 50%; margin: 10px; padding: 5px;">Finalizar Correção</button>';
                 }
             }
-        }else{
-            echo 'Erro ao selecionar dados das redações.';
-        }
     }
 ?>
 
@@ -964,6 +613,16 @@
     var novoCardComentario;
     var card_comentario = document.getElementById('card-comentario');
     card_comentario.style.display = "none";
+
+    //VARIÁVEIS PARA CRITÉRIOS DINÂMICOS
+    var qtdCriterio = 0;
+    var cardNovoCriterio;
+    var cardCriterioAvaliacao = document.getElementById('card_criterio_avaliacao');
+    cardCriterioAvaliacao.style.display = "none";
+    var btnAdicionarCriterio = document.getElementById('adicionarCriterio');
+    var arrayTituloCriterio = [];
+    var arrayTextoCriterio = [];
+    var arrayNotaCriterio = [];
 
     document.getElementById('btn-verde').addEventListener("click", ()=>{
         var userSelection = window.getSelection();
@@ -1109,12 +768,59 @@
         }
     }
 
+    btnAdicionarCriterio.addEventListener("click", ()=>{
+            qtdCriterio++;
+            cardNovoCriterio = cardCriterioAvaliacao.cloneNode(true);
+            cardNovoCriterio.id = "card_criterio_avaliacao_"+qtdCriterio;
+            cardNovoCriterio.children[0].id = "tituloCriterio"+qtdCriterio;
+            cardNovoCriterio.children[1].id = "textoCriterio"+qtdCriterio;
+            cardNovoCriterio.children[2].id = "notaCriterio"+qtdCriterio;
+            cardNovoCriterio.children[3].id = "btnSalvarCriterio"+qtdCriterio;
+            cardNovoCriterio.children[4].id = "btnExcluirCriterio"+qtdCriterio;
+
+            cardNovoCriterio.children[4].style.display = "none";
+
+            document.getElementById('painel_criterios_dinamicos').parentNode.insertBefore(cardNovoCriterio, null);
+            cardNovoCriterio.style.display = "flex";
+
+            getCriterio(qtdCriterio);
+        })
+
+        function getCriterio(idCriterio){
+            var btnSalvarCriterio = document.getElementById('btnSalvarCriterio'+idCriterio);
+
+            btnSalvarCriterio.addEventListener("click", ()=>{
+                var tituloCriterio = document.getElementById('tituloCriterio'+idCriterio).value;
+                var textoCriterio = document.getElementById('textoCriterio'+idCriterio).value;
+                var notaCriterio = document.getElementById('notaCriterio'+idCriterio).value;
+                var btnExcluirCriterio = document.getElementById('btnExcluirCriterio'+idCriterio);
+
+                if((tituloCriterio != '') && (textoCriterio != '') && (notaCriterio != '')){
+                    //salvar tudo no array
+                    arrayTituloCriterio.push(tituloCriterio)
+                    arrayTextoCriterio.push(textoCriterio)
+                    arrayNotaCriterio.push(notaCriterio)
+
+                    btnSalvarCriterio.style.display = "none";
+                    btnExcluirCriterio.style.display = "flex";
+
+                    btnExcluirCriterio.addEventListener("click", ()=>{
+                        arrayTituloCriterio[idCriterio-1] = 'undefined'
+                        document.getElementById('card_criterio_avaliacao_'+idCriterio).style.display = "none";
+                        console.log(arrayTituloCriterio)
+                    })
+                }else{
+                    alert('Preencha todos os campos deste critério.');
+                }
+
+            })
+        }
+
 
     document.getElementById('btnFinalizar').addEventListener("click", ()=>{
         if(arrayComentario.lenght == arrayTrechos.lenght){
                 var string_obj_jason = JSON.stringify(arrayComentario);
                 var string_obj_jason_trechos = JSON.stringify(arrayTrechos);
-                var comentario_final = document.getElementById('comentario_final').value;
                 var id_corretor = document.getElementById('id_corretor').value;
 
                 var redacaoAlterada = document.getElementById('redacao').innerHTML;
@@ -1123,6 +829,7 @@
                 id_aluno = document.getElementById('id_aluno').value;
 
                 if(modelo_redacao.value == 'Enem'){
+                    var comentario_final = document.getElementById('comentario_final').value;
                     var n1 = document.getElementById('criterio_1_enem').value;
                     var n2 = document.getElementById('criterio_2_enem').value;
                     var n3 = document.getElementById('criterio_3_enem').value;
@@ -1142,6 +849,7 @@
                         }
                     });
                 }else if(modelo_redacao.value == 'Fuvest'){
+                    var comentario_final = document.getElementById('comentario_final').value;
                     var n1 = document.getElementById('criterio_1_fuvest').value;
                     var n2 = document.getElementById('criterio_2_fuvest').value;
                     var n3 = document.getElementById('criterio_3_fuvest').value;
@@ -1162,6 +870,7 @@
                     });
 
                 }else if(modelo_redacao.value == 'Unicamp'){
+                    var comentario_final = document.getElementById('comentario_final').value;
                     var n1 = document.getElementById('criterio_1_unicamp').value;
                     var n2 = document.getElementById('criterio_2_unicamp').value;
                     var n3 = document.getElementById('criterio_3_unicamp').value;
@@ -1180,6 +889,7 @@
                         }
                     });
                 }else if(modelo_redacao.value == 'Vunesp'){
+                    var comentario_final = document.getElementById('comentario_final').value;
                     var n1 = document.getElementById('criterio_1_vunesp').value;
                     var n2 = document.getElementById('criterio_2_vunesp').value;
                     var n3 = document.getElementById('criterio_3_vunesp').value;
@@ -1187,6 +897,20 @@
 
                     obj_jason = {"n1": n1, "n2": n2, "n3": n3, "nota_total": nota_total, "comentarios": arrayComentario, "trechos": arrayTrechos, "redacao_alterada": redacaoAlterada, "id_aluno": id_aluno, "id_redacao": id_redacao.value, "modelo_redacao": modelo_redacao.value, "comentario_final": comentario_final,"id_corretor": id_corretor, "cores": arrayCorTrechos};
                     json = JSON.stringify(obj_jason);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'salvar_redacao.php',
+                        data: {string_json: json},
+                        success: ()=>{
+                            window.location.href="./minhas_correcoes.php";
+                        }
+                    });
+                }else if(modelo_redacao.value == 'Objetivo'){
+                    obj_jason = {'notaCriterio': arrayNotaCriterio, 'tituloCriterio': arrayTituloCriterio, 'textoCriterio': arrayTextoCriterio, 'id_aluno': id_aluno, 'id_redacao': id_redacao.value, 'modelo_redacao': modelo_redacao.value, 'redacao_alterada': redacaoAlterada, "comentarios": arrayComentario, "trechos": arrayTrechos}
+                    json = JSON.stringify(obj_jason);
+
+                    console.log(json);
 
                     $.ajax({
                         type: 'POST',
@@ -1613,8 +1337,93 @@
     button.btnExcluirComentario{
         background-color: #7F0100;
     }
+
+    div.card_criterio_avaliacao{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        border: 1px solid #8C8A7D;
+        border-radius: 5px;
+        margin: 10px;
+    }
+
+    div.card_criterio_avaliacao textarea{
+        font-size: 15px;
+    }
+
+    div.card_criterio_avaliacao textarea.titulo_criterio{
+        margin: 5px;
+        padding: 2px;
+        border-radius: 3px;
+    }
+
+    div.card_criterio_avaliacao textarea.texto_criterio{
+        margin: 5px;
+        padding: 2px;
+        border-radius: 3px;
+        min-height: 100px;
+    }
+
+    div.card_criterio_avaliacao textarea.nota_criterio{
+        margin: 5px;
+        padding: 2px;
+        border-radius: 3px;
+        width: 50%;
+    }
+
+    div.card_criterio_avaliacao button.btnSalvarCriterio{
+        margin: 5px;
+        border: none;
+        border-radius: 3px;
+        padding: 10px;
+        width: 200px;
+        background-color: #E1289B;
+        transition-duration: 0.4s;
+        color: #ffffff;
+        font-weight: bold;
+        outline: none;
+    }
+
+    div.card_criterio_avaliacao button.btnSalvarCriterio{
+        opacity: 0.9;
+        cursor: pointer;
+    }
+
+    div.card_criterio_avaliacao button.btnExcluirCriterio{
+        margin: 5px;
+        border: none;
+        border-radius: 3px;
+        padding: 10px;
+        width: 115px;
+        background-color: #A60303;
+        transition-duration: 0.4s;
+        color: #ffffff;
+        font-weight: bold;
+        outline: none;
+        text-align: center;
+    }
+
+    div.card_criterio_avaliacao button.btnExcluirCriterio{
+        opacity: 0.9;
+        cursor: pointer;
+    }
+
+
 </style>
 
 <script type="text/javascript">
+      function tecla(){
+            evt = window.event;
+            var tecla = evt.keyCode;
 
+            if(tecla > 47 && tecla < 58){ 
+            alert('Precione apenas teclas numéricas');
+            evt.preventDefault();
+            }
+        }
+
+        //tem que fazer a funcionalidade de excluir o criterio
+
+        
 </script>
+

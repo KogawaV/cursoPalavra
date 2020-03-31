@@ -1498,6 +1498,46 @@
                 }else{
                     echo 'Falha ao selecionar os dados de correção.';
                 }
+            }else if($universidade == 'objetivo'){
+                //pegando a redação do banco de dados
+                $sql_get_redacao = "SELECT * FROM redacoes_escritas WHERE id_redacao = $id_redacao";
+                $sql_get_redacao_result = mysqli_query($conn, $sql_get_redacao);
+                while($row_redacao = mysqli_fetch_array($sql_get_redacao_result)){
+                    echo '
+                    
+                        <div id="redacao">'.$row_redacao['id_red'].'</div>
+
+                    ';
+                }
+
+
+                //pegar os criterios
+                $sql_get_criterios = "SELECT * FROM correcao_criterio_objetivo WHERE id_redacao = $id_redacao";
+                $sql_get_criterios_result = mysqli_query($conn, $sql_get_criterios);
+                while($row_criterio = mysqli_fetch_array($sql_get_criterios_result)){
+                    if($row_criterio['titulo_criterio'] != 'undefined'){
+                        echo '
+                        
+                            Título: '.$row_criterio['titulo_criterio'].'
+                            Texto: '.$row_criterio['texto_criterio'].'
+                            Nota: '.$row_criterio['nota_criterio'].'
+
+                        <br>';
+                    }
+                }
+
+                //pegar os trechos selecionados e os seus respectivoc comentarios
+                $sql_get_trecho = "SELECT * FROM correcao_trechos_objetivo WHERE id_redacao = $id_redacao";
+                $sql_get_trecho_result = mysqli_query($conn, $sql_get_trecho);
+                while($row_trecho = mysqli_fetch_array($sql_get_trecho_result)){
+                    echo '
+                    
+                        Trecho: '.$row_trecho['trecho_selecionado'].'
+                        <br>
+                        Comentário: '.$row_trecho['comentario_trecho'].'
+                        <br><br>
+                    ';
+                }
             }
         }
 }

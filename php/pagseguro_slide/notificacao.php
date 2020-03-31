@@ -2,6 +2,8 @@
 
 include './../connection.php';
 
+header("access-control-allow-origin: https://sandbox.pagseguro.uol.com.br");
+
 $notificationCode = preg_replace('/[^[:alnum:]-]/','',$_POST["notificationCode"]);
 
 $data['token'] = '0CE1D9CF08844ED487955888F10D56F7';
@@ -25,7 +27,9 @@ $reference = $xml->reference;
 $status = $xml->status;
 $id_aluno;
 
-
+if($status == 0){
+    $status = 1;
+}
 
 if($reference && $status){
 
@@ -37,7 +41,7 @@ if($reference && $status){
     }
 
     $sql_update_acesso = "UPDATE aluno SET acesso = $status WHERE id_aluno = $id_aluno";
-
+    $sql_update_acesso_result = mysqli_query($conn, $sql_update_acesso);
 }
 
 ?>

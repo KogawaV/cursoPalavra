@@ -6,7 +6,6 @@
 
     $id_aluno = $array_json->{'id_aluno'};
     $id_redacao = $array_json->{'id_redacao'};
-    $id_corretor = $array_json->{'id_corretor'};
     $modelo_redacao = $array_json->{'modelo_redacao'};
     $redacao_alterada = $array_json->{'redacao_alterada'};
     $inserir;
@@ -25,6 +24,7 @@
         $n4 = $array_json->{'n4'};
         $n5 = $array_json->{'n5'};
         $nota_total = $array_json->{'nota_total'};
+        $id_corretor = $array_json->{'id_corretor'};//somente vestibulares
 
         $comentario_final = $array_json->{'comentario_final'};
     
@@ -89,6 +89,7 @@
         $n3 = $array_json->{'n3'};
         $n4 = $array_json->{'n4'};
         $nota_total = $array_json->{'nota_total'};
+        $id_corretor = $array_json->{'id_corretor'};//somente vestibulares
 
         $comentario_final = $array_json->{'comentario_final'};
 
@@ -149,6 +150,7 @@
         $n2 = $array_json->{'n2'};
         $n3 = $array_json->{'n3'};
         $nota_total = $array_json->{'nota_total'};
+        $id_corretor = $array_json->{'id_corretor'};//somente vestibulares
 
         $comentario_final = $array_json->{'comentario_final'};
 
@@ -212,6 +214,7 @@
         $n2 = $array_json->{'n2'};
         $n3 = $array_json->{'n3'};
         $nota_total = $array_json->{'nota_total'};
+        $id_corretor = $array_json->{'id_corretor'};//somente vestibulares
 
         $comentario_final = $array_json->{'comentario_final'};
 
@@ -271,9 +274,60 @@
                 echo 'Erro ao atualizar status de correção da redação.';
             }
         }
-    }
+    }else if($modelo_redacao == 'Objetivo'){
+        $arrayNotaCriterio = $array_json->{'notaCriterio'};
+        $arrayTituloCriterio = $array_json->{'tituloCriterio'};
+        $arrayTextoCriterio = $array_json->{'textoCriterio'};
+        
+        $array_comentarios = $array_json->{'comentarios'};
+        $array_trechos = $array_json->{'trechos'};
 
-    function SalvarDadosGrafico(){
-        //enviar os dados para a tabela de gráficos
+        $inserir;
+
+        //inserindo criterios
+        for($i = 0; $i < count($arrayTituloCriterio); $i++){
+            $sql_insert_criterios = "INSERT INTO correcao_criterio_objetivo(id_aluno, id_redacao, titulo_criterio, texto_criterio, nota_criterio)VALUES($id_aluno, $id_redacao, '$arrayTituloCriterio[$i]', '$arrayTextoCriterio[$i]', '$arrayNotaCriterio[$i]')";
+            $sql_insert_criterios_result = mysqli_query($conn, $sql_insert_criterios);
+        }
+
+        //inserindo os trechos selecionados
+        for($i = 0; $i < count($array_comentarios); $i++){
+            $sql_insert_trechos = "INSERT INTO correcao_trechos_objetivo(id_aluno, id_redacao, trecho_selecionado, comentario_trecho)VALUES($id_aluno, $id_redacao, '$array_trechos[$i]', '$array_comentarios[$i]')";
+            echo 'Trechos: '.$array_trechos[$i].'<br>';
+            echo 'Comentários: '.$array_comentarios[$i].'<br>';
+            echo 'Id do aluno: '.$id_aluno.'<br>';
+            echo 'Id da redação: '. $id_redacao.'<br>';
+            $sql_insert_trechos_result = mysqli_query($conn, $sql_insert_trechos);
+            if($sql_insert_trechos_result){
+                echo 'inserido';
+                $inserir = true;
+            }else{
+                $inserir = false;
+                echo 'não inserido';
+            }
+        }
+
+        if($inserir == true){
+            $sql_update_status_redacao_corrigida = "UPDATE redacoes_escritas SET status_corrigida = 1 , redacao_alterada = '$redacao_alterada' WHERE id_aluno_redacao = $id_aluno AND id_red = $id_redacao";
+            $sql_update_status_redacao_corrigida_result = mysqli_query($conn, $sql_update_status_redacao_corrigida);
+            if($sql_update_status_redacao_corrigida_result){
+                echo 'Status atualizado com sucesso.';
+            }else{
+                echo 'Erro ao atualizar status de correção da redação.';
+            }
+        }
+
+
+
+        /*print_r($arrayNotaCriterio);
+        print_r($arrayTituloCriterio);
+        print_r($arrayTextoCriterio);
+
+        print_r($array_comentarios);
+        print_r($array_trechos);
+        
+        echo $redacao_alterada;
+        echo $id_redacao.'<br>';
+        echo $id_aluno;*/
     }
     
