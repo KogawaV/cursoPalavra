@@ -6,8 +6,8 @@ header("access-control-allow-origin: https://sandbox.pagseguro.uol.com.br");
 
 $notificationCode = preg_replace('/[^[:alnum:]-]/','',$_POST["notificationCode"]);
 
-$data['token'] = '0CE1D9CF08844ED487955888F10D56F7';
-$data['email'] = 'k219594@dac.unicamp.br';
+$data['token'] = 'B96352F5BD9E411BABF22EE4FDA32CDC';
+$data['email'] = 'ero.emp@gmail.com';
 
 $data = http_build_query($data);
 

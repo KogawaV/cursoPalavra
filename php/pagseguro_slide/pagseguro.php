@@ -38,8 +38,8 @@ while($row = mysqli_fetch_array($sql_select_id_carrinho_result)){
     $id_carrinho = $row['identificador_carrinho'];
 }
 
-$data['token'] ='0CE1D9CF08844ED487955888F10D56F7';
-$data['email'] = 'k219594@dac.unicamp.br';
+$data['token'] ='B96352F5BD9E411BABF22EE4FDA32CDC';
+$data['email'] = 'ero.emp@gmail.com';
 $data['currency'] = 'BRL';
 $data['itemId1'] = $pedido;
 $data['itemQuantity1'] = '1';
