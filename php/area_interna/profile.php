@@ -75,7 +75,7 @@
                 </div>
                 <a href="./index.php" class="">
                     <i class="fas fa-home iSidenav"></i>
-                    <span class="sidenavTxt">Home</span>
+                    <span class="sidenavTxt">Desempenho</span>
                 </a>
                 <a href="./profile.php" class="active">
                     <i class="fas fa-user iSidenav"></i>
@@ -83,7 +83,7 @@
                 </a>
                 <a href="./temas.php" class="">
                     <i class="fas fa-user iSidenav"></i>
-                    <span class="sidenavTxt">Temas</span>
+                    <span class="sidenavTxt">Temas e Produção</span>
                 </a>
                 <!-- <a href="./novaRed.php" class="">
                     <i class="fas fa-file-medical iSidenav"></i>
@@ -109,17 +109,6 @@
                 </div>
                 <div class="widgets logout">
                     <a href="./../login/logout.php"><i class="fas fa-sign-out-alt"></i></a>
-                </div>
-            </div>
-            <div class="cardWrapper">
-                <div class="cardTop">
-                    Que página é essa?
-                </div>
-                <div class="card">
-                    <span>Aqui, você edita e vê seu perfil!
-                        <br>
-                        Algum texto.
-                    </span>
                 </div>
             </div>
             <div class="cardWrapper">

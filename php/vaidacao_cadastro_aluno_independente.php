@@ -38,7 +38,7 @@
                         $limite_redacao = $row_texto_tipo_plano['limite_redacao_por_aluno'];
                     }   
                     //inserir aluno na base de dados
-                    $sql_insert_aluno = "INSERT INTO aluno(nome_aluno, email_aluno, cpf_aluno, senha_aluno, nome_escola, id_escola, acesso)VALUES('$nome_aluno', '$email_aluno', '$cpf_aluno', '$senha_aluno', 'individual', 0, 1)";//de acesso to setando 1(concedendo acesso ao aluno) enquanto a funcionalidade de pagamento ainda não está pronta
+                    $sql_insert_aluno = "INSERT INTO aluno(nome_aluno, email_aluno, cpf_aluno, senha_aluno, nome_escola, id_escola, acesso)VALUES('$nome_aluno', '$email_aluno', '$cpf_aluno', '$senha_aluno', 'individual', 0, 0)";//de acesso to setando 1(concedendo acesso ao aluno) enquanto a funcionalidade de pagamento ainda não está pronta
                     $sql_insert_aluno_result = mysqli_query($conn, $sql_insert_aluno);
                     if($sql_insert_aluno_result){//insert deu certo
                         //$sql_select_id = "SELECT * FROM aluno a INNER JOIN tipos_planos tp ON a.tipo_plano = tp.id_tipo_plano WHERE cpf_aluno = '$cpf_aluno'";

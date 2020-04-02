@@ -380,7 +380,7 @@
                 </div>
                 <a href="./index.php" class="active">
                     <i class="fas fa-home iSidenav"></i>
-                    <span class="sidenavTxt">Home</span>
+                    <span class="sidenavTxt">Desempenho</span>
                 </a>
                 <a href="./profile.php" class="">
                     <i class="fas fa-user iSidenav"></i>
@@ -388,7 +388,7 @@
                 </a>
                 <a href="./temas.php" class="">
                     <i class="fas fa-user iSidenav"></i>
-                    <span class="sidenavTxt">Temas</span>
+                    <span class="sidenavTxt">Temas e Produção</span>
                 </a>
                 <!-- <a href="./novaRed.php" class="">
                     <i class="fas fa-file-medical iSidenav"></i>

@@ -180,25 +180,25 @@ include './../connection.php';
                                     <tr>
                                         <td style="background-color: #F5F5F5;">Preço</td>
                                         <td>
-                                            <span >R$27,00</span>
+                                            <span >R$34,90</span>
                                         </td>
                                         <td>
-                                            <span >R$40,00</span>
+                                            <span >R$52,90</span>
                                         </td>
                                         <td>
-                                            <span >R$70,00</span>
+                                            <span >R$99,00</span>
                                         </td>
                                         <td>
-                                            <span >R$50,00</span>
+                                            <span >R$49,90</span>
                                         </td>
                                         <td>
-                                            <span >R$80,00</span>
+                                            <span >R$89,00</span>
                                         </td>
                                         <td>
-                                            <span >R$64,00</span>
+                                            <span >R$74,90</span>
                                         </td>
                                         <td>
-                                            <span >R$64,00</span>
+                                            <span >R$74,90</span>
                                         </td>
                                     </tr>
                                     <tr>

@@ -76,11 +76,11 @@
             <label>Nome</label>
             <input type="text" name="nome_aluno">
             <label>Email</label>
-            <input type="email" name="email_aluno">
+            <input type="text" name="email_aluno">
             <label>CPF</label>
             <input type="text" name="cpf_aluno">
             <label>Senha</label>
-            <input type="text" name="senha_aluno">
+            <input type="password" name="senha_aluno">
             <select name="tipo_plano" id="id_tipo_plano">
                 <option value="">Selecione Seu Plano</option>
                 <?php   

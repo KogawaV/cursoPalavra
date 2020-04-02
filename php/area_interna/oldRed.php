@@ -300,7 +300,7 @@
                 </div>
                 <a href="./index.php" class="">
                     <i class="fas fa-home iSidenav"></i>
-                    <span class="sidenavTxt">Home</span>
+                    <span class="sidenavTxt">Desempenho</span>
                 </a>
                 <a href="./profile.php" class="">
                     <i class="fas fa-user iSidenav"></i>
@@ -308,7 +308,7 @@
                 </a>
                 <a href="./temas.php" class="">
                     <i class="fas fa-user iSidenav"></i>
-                    <span class="sidenavTxt">Temas</span>
+                    <span class="sidenavTxt">Temas e Produção</span>
                 </a>
                 <!-- <a href="./novaRed.php" class="">
                     <i class="fas fa-file-medical iSidenav"></i>
@@ -352,18 +352,7 @@
             </div>
             <div class="cardWrapper">
                 <div class="cardTop">
-                    Que página é essa?
-                </div>
-                <div class="card">
-                    <span>Aqui, ficam suas redações passadas e respectivas correções!
-                        <br>
-                        Algum texto.                    
-                        </span>
-                </div>
-            </div>
-            <div class="cardWrapper">
-                <div class="cardTop">
-                    Redações passadas
+                    Redações Enviadas
                 </div>
                 <div class="painel-card">
                    <?php
@@ -374,6 +363,7 @@
                         $sql_select_redacoes_escritas_result = mysqli_query($conn, $sql_select_redacoes_escritas);
 
                         $nome_corretor;
+                        $tema_da_redacao;
 
                         if($sql_select_redacoes_escritas_result && $sql_select_redacoes_result){
                             $row_red_enviada = mysqli_num_rows($sql_select_redacoes_result);
@@ -570,6 +560,7 @@
                                                 $nome_corretor = 'Na fila de correção.';
                                             }else{
                                                 $nome_corretor = $row['nome_corretor'];
+                                                $tema_da_redacao = $row['tema_redacao'];
                                             }
 
                                             if($row['tipo_redacao'] == 1){
@@ -658,7 +649,7 @@
                                                         <div class="body-card-1">
                                                             <div class="body-card-tema-1">
                                                                 <label>Tema </label>
-                                                                <p>'.utf8_encode($row['tema_redacao']).'</p>
+                                                                <p>'.$tema_da_redacao.'</p>
                                                             </div>
                                                             <div class="body-card-modelo-1">
                                                                 <label>Modelo </label>
@@ -684,7 +675,7 @@
                                                             <div class="body-card-2">
                                                                 <div class="body-card-tema-2">
                                                                     <label>Tema </label>
-                                                                    <p>'.utf8_encode($row['tema_redacao']).'</p>
+                                                                    <p>'.$row['tema_redacao'].'</p>
                                                                 </div>
                                                                 <div class="body-card-modelo-2">
                                                                     <label>Modelo </label>
@@ -709,7 +700,7 @@
                                                             <div class="body-card-0">
                                                                 <div class="body-card-tema-0">
                                                                     <label>Tema </label>
-                                                                    <p>'.utf8_encode($row['tema_redacao']).'</p>
+                                                                    <p>'.$row['tema_redacao'].'</p>
                                                                 </div>
                                                                 <div class="body-card-modelo-0">
                                                                     <label>Modelo </label>

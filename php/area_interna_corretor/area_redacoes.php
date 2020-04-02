@@ -54,10 +54,10 @@
                         </a> 
                     </div>
                 </div>
-                <a href="./index_corretor.php" class="">
+                <!-- <a href="./index_corretor.php" class="">
                     <i class="fas fa-home iSidenav"></i>
                     <span class="sidenavTxt">Home</span>
-                </a>
+                </a> -->
                 <a href="./area_redacoes.php" class="active">
                     <i class="fas fa-user iSidenav"></i>
                     <span class="sidenavTxt">Área Redações</span>
@@ -82,17 +82,6 @@
                 </div>
                 <div class="widgets logout">
                     <a href="./../login/logout.php"><i class="fas fa-sign-out-alt"></i></a>
-                </div>
-            </div>
-            <div class="cardWrapper">
-                <div class="cardTop">
-                    Que página é essa?
-                </div>
-                <div class="card">
-                    <span>Aqui você é onde você pode procurar por novas redações corrigidas.
-                        <br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet volutpat consequat mauris nunc congue nisi vitae suscipit tellus. Ut faucibus pulvinar elementum integer enim neque volutpat.
-                    </span>
                 </div>
             </div>
             <div class="cardWrapper">
